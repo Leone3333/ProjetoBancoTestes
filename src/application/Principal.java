@@ -56,6 +56,7 @@ public class Principal {
             System.out.println();
             System.out.println("Digite uma opção: ");
             String opcao = entrada.next().trim();
+            System.out.print("\033[H\033[2J");
 
             //Transformar entrada String em Integer. Se não funciona ocorrerá um tratamento de erro.
             Integer opcaoValida = Integer.parseInt(opcao);   

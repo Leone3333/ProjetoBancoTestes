@@ -49,6 +49,7 @@ public class CadastrarNoBanco {
 
             case VOLTAR:
                 running = false;
+                System.out.print("\033[H\033[2J");
                 break;
 
             default:
@@ -119,7 +120,16 @@ public class CadastrarNoBanco {
                 return true;
             }
             return false;
+
+        } else if(dadosExistem(bancoCriado, cpfDigitado, entrada)){
+            if(campoVazioOuInvalido(entrada)){
+                return true;
+    
+            }            
+                return false;
         }
+
+
 
         System.out.println("Data de nascimento dd/mm/yyyy: ");
         String dataDigitada = entrada.next().trim(); 
@@ -172,7 +182,17 @@ public class CadastrarNoBanco {
         String emailDigitado = entrada.next().trim();
 
         //Se o emailDigitado contém @.
-        if(!(emailDigitado.matches("^[a-zA-Z0-9._+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$"))){
+        if(emailDigitado.isEmpty()){
+            System.out.println("O campo não pode estar vazio");
+            if(campoVazioOuInvalido(entrada)){
+                return true;
+            }
+                return false;
+    
+        }
+        
+        //Se o emailDigitado contém @.
+        else if(!(emailDigitado.matches("^[a-zA-Z0-9._+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$"))){
             System.out.println("Digite um e-mail válido! Ex: nome@seudominio.com.br");
             if(campoVazioOuInvalido(entrada)){
                 return true;
@@ -180,14 +200,7 @@ public class CadastrarNoBanco {
             return false;
         }
 
-        else if(emailDigitado.isEmpty()){
-            System.out.println("O campo não pode estar vazio");
-            if(campoVazioOuInvalido(entrada)){
-                return true;
-            }
-                return false;
-    
-        } else if(dadosExistem(bancoCriado, emailDigitado, entrada)){
+         else if(dadosExistem(bancoCriado, emailDigitado, entrada)){
             if(campoVazioOuInvalido(entrada)){
                 return true;
 
@@ -306,7 +319,15 @@ public class CadastrarNoBanco {
             return true;
         }
         return false;
+
+    }   else if(dadosExistem(bancoCriado, cnpjDigitado, entrada)){
+        if(campoVazioOuInvalido(entrada)){
+            return true;
+
+        }            
+            return false;
     }
+
 
     System.out.println("Data de criação dd/mm/yyyy: ");
         String dataDigitada = entrada.next().trim(); 
@@ -346,8 +367,17 @@ public class CadastrarNoBanco {
         System.out.println("E-mail da Empresa: ");
         String emailDigitado = entrada.next().trim();
 
+        if(emailDigitado.isEmpty()){
+            System.out.println("O campo não pode estar vazio");
+            if(campoVazioOuInvalido(entrada)){
+                return true;
+            }
+                return false;
+    
+        }
+
         //Se o emailDigitado contém @.
-        if(!(emailDigitado.matches("^[a-zA-Z0-9._+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$"))){
+        else if(!(emailDigitado.matches("^[a-zA-Z0-9._+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$"))){
             System.out.println("Digite um e-mail válido! Ex: nome@seudominio.com.br");
             if(campoVazioOuInvalido(entrada)){
                 return true;
@@ -355,14 +385,7 @@ public class CadastrarNoBanco {
             return false;
         }
 
-        else if(emailDigitado.isEmpty()){
-            System.out.println("O campo não pode estar vazio");
-            if(campoVazioOuInvalido(entrada)){
-                return true;
-            }
-                return false;
-    
-        } else if(dadosExistem(bancoCriado, emailDigitado, entrada)){
+         else if(dadosExistem(bancoCriado, emailDigitado, entrada)){
             if(campoVazioOuInvalido(entrada)){
                 return true;
 
@@ -399,7 +422,6 @@ public class CadastrarNoBanco {
                 codigoCorreto = true;
             }
         }
-
 
     } catch (InputMismatchException e) {
         System.out.print("\033[H\033[2J");
@@ -499,6 +521,7 @@ public class CadastrarNoBanco {
             String opcao = entrada.next().toLowerCase().substring(0);
 
             if(opcao.equals("s")){
+                System.out.print("\033[H\033[2J");
                 return true;
             }
             
@@ -506,48 +529,23 @@ public class CadastrarNoBanco {
 
         }
 
-  
-    public static String formatarCNPJ(String cnpj) {
-
-    // Verificar se o CNPJ está no formato correto
-    if (!cnpj.matches("^(?:(?:\\d{2}\\.?\\d{3}\\.?\\d{3}\\/?\\d{4}-?\\d{2})|(?:(?=\\d{14}$)\\d{2}\\d{3}\\d{3}\\d{4}\\d{2}))$")) {
-        System.out.println("O CNPJ deve ser válido! Ex: 00.000.000/0001-00");
-        System.out.println();
-        System.out.println("Pressione ENTER para continuar");
-        return null;
-    }
-
-    // Remover os caracteres que não são números
-    String cnpjNumeros = cnpj.replaceAll("[^0-9]", "");        
-
-    // Formatar o CNPJ no padrão 00.000.000/0001-00
-    return cnpjNumeros.substring(0, 2) + "." + 
-           cnpjNumeros.substring(2, 5) + "." + 
-           cnpjNumeros.substring(5, 8) + "/" + 
-           cnpjNumeros.substring(8, 12) + "-" + 
-           cnpjNumeros.substring(12);
-}
-
     public static boolean dadosExistem(Banco bancoCriado, String dadoDigitado, Scanner entrada){
 
         //Verificar se o CPF, CNPJ ou email já existe.
         for(Conta conta : bancoCriado.getContasNoBanco()){
             if(conta.getIdentificacao().equals(dadoDigitado) && conta instanceof ContaPF){
                 System.out.println("O CPF " + dadoDigitado + " já está cadastrado");
-                campoVazioOuInvalido(entrada);
                 return true;
 
 
             } else if(conta.getIdentificacao().equals(dadoDigitado) && conta instanceof ContaPJ){
                 System.out.println("O CNPJ " + dadoDigitado + " já está cadastrado");
-                campoVazioOuInvalido(entrada);
                 return true;
                 
 
 
             } else if(conta.getEnderecoEmail().equals(dadoDigitado)){
                 System.out.println("O e-mail " + dadoDigitado + " já está cadastrado");
-                campoVazioOuInvalido(entrada);
                 return true;
 
 
