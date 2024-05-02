@@ -66,34 +66,34 @@ public class Banco {
 
 
     //Exibir as informações da conta de acordo com o tipo
-    public void exibirDados(String numeroDaConta){
+    public String exibirDados(String numeroDaConta){
 
         for(Conta conta : contasNoBanco){
             if(conta.getNumeroDaConta().equals(numeroDaConta)){
 
                 //Verificar se a conta é uma instância de ContaPF
                 if (conta instanceof ContaPF){
-                    System.out.println("Nome do Titular: " + conta.getNome());
-                    System.out.println("Data de Nascimento: " + conta.getData());
-                    System.out.println("CPF: " + conta.getIdentificacao());
-                    System.out.println("Tipo da Conta: " + conta.getTipoDaConta());
+                    return "Nome da Empresa: " + conta.getNome() + "\n"
+                    + "Data de criação: " + conta.getData() + "\n"
+                    + "CNPJ: " + conta.getIdentificacao() + "\n"
+                    + "Tipo da Conta: " + conta.getTipoDaConta() + "\n"
+                    + "Número da conta: " + conta.getNumeroDaConta() + "\n"
+                    + "Endereço de e-mail " + conta.getEnderecoEmail();
                 }
 
                 else{
 
-                    System.out.println("Nome da Empresa: " + conta.getNome());
-                    System.out.println("Data de criação: " + conta.getData());
-                    System.out.println("CNPJ: " + conta.getIdentificacao());
-                    System.out.println("Tipo da Conta: " + conta.getTipoDaConta());
-
+                    return "Nome da Empresa: " + conta.getNome() + "\n"
+                    + "Data de criação: " + conta.getData() + "\n"
+                    + "CNPJ: " + conta.getIdentificacao() + "\n"
+                    + "Tipo da Conta: " + conta.getTipoDaConta() + "\n"
+                    + "Número da conta: " + conta.getNumeroDaConta() + "\n"
+                    + "Endereço de e-mail " + conta.getEnderecoEmail();
                 }
-
-                System.out.println("Número da conta: " + conta.getNumeroDaConta());
-                System.out.println("Endereço de e-mail: " + conta.getEnderecoEmail());
-                System.out.printf("Saldo: R$%.2f%n", conta.getSaldo());
-
             }
         }
+
+        return "Não foi possível exibir os dados da conta";
 
     }
 
@@ -126,5 +126,14 @@ public class Banco {
             return true;
         } else
         return false; 
+    }
+
+    public Mensagem enviarDados(String emailDoDestinatario){
+        String contaCriada = "Boas notícias! Sua conta foi criada com sucesso. Estamos felizes por ter vc aqui" + "\n"
+        + "Agência: " + getNumeroDaAgencia() + "\n";
+
+        String dados = contaCriada + exibirDados(emailDoDestinatario);
+        Mensagem mensagem = new Mensagem(emailDoBanco.getEmail(), emailDoDestinatario, dados);
+        return mensagem;
     }
 }

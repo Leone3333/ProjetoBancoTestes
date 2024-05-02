@@ -41,6 +41,7 @@ public class Principal {
 
         //Flag para controlar o fluxo do programa.
         boolean running = true;
+        
         do {
 
             try {
@@ -98,7 +99,6 @@ public class Principal {
                     System.out.println("      Digite apenas números!     ");
                     System.out.println("=================================");
                     System.out.println("Pressione ENTER pra continuar.");
-                    entrada.nextLine();
                     entrada.nextLine();
             }
         

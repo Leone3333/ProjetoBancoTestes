@@ -21,6 +21,8 @@ public class CadastrarNoBanco {
     boolean running = true;
 
     do{
+       
+        try{ 
         System.out.println("=========== Cadastrar Conta =========");
         System.out.printf("[%d] Conta Pessoa Física %n", CONTAPF);
         System.out.printf("[%d] Conta Pessoa Jurídica %n", CONTAPJ);
@@ -28,7 +30,7 @@ public class CadastrarNoBanco {
         System.out.println("=====================================");
         System.out.println();
 
-        try{
+
         System.out.println("Digite uma opção: ");
         int opcao = entrada.nextInt();
 
@@ -40,11 +42,15 @@ public class CadastrarNoBanco {
             case CONTAPF:
                 while(!cadastroFeito){
                     cadastroFeito = cadastrarPF(entrada, bancoCriado, servidorEmail);}
+
+                running = false;
                 break;
 
             case CONTAPJ:
                 while(!cadastroFeito){
                     cadastroFeito = cadastrarPJ(entrada, bancoCriado, servidorEmail);}
+
+                running = false;
                 break;
 
             case VOLTAR:
@@ -208,50 +214,9 @@ public class CadastrarNoBanco {
                 return false;
         }
 
-        // Instância do Email.
-        Email emailCriado = servidorEmail.cadastrarEmail(emailDigitado);
-        verificacaoDeEmail();
+        //Criar e verificar o e-mail
+        Email emailCriado = verificacaoDeEmail(entrada, servidorEmail, bancoCriado, emailDigitado);
 
-        
-        //Enviar um código de verificação
-        servidorEmail.enviarMensagem(bancoCriado.enviarCodigo(emailDigitado));
-        emailCriado.exibirEmailsRecebidos();
-        
-        try {
-        
-            System.out.println();
-            System.out.println("========== Verificação ==========");
-            System.out.println("Verifique o código enviado para o seu e-mail");
-            System.out.println("Digite o código: ");
-            Integer codigoDigitado = entrada.nextInt();
-    
-            boolean codigoCorreto = false;
-    
-                while (!(codigoCorreto)) {
-    
-                    if(!(bancoCriado.verificarCodigo(codigoDigitado))){
-                        System.out.println();
-                        System.out.println("Código de verificação incorreto!");
-                        System.out.println("Digite o código novamente: ");
-                        codigoDigitado = entrada.nextInt();
-                }
-    
-                else{
-                    codigoCorreto = true;
-                }
-            }
-    
-    
-        } catch (InputMismatchException e) {
-            System.out.print("\033[H\033[2J");
-            System.out.println("============ ATENÇÃO! ===========");
-            System.out.println("      Digite apenas números!     ");
-            System.out.println("=================================");
-            System.out.println("Pressione ENTER pra continuar.");
-            entrada.nextLine();
-            return false;
-        }
-        
         // Guardar a senha criada através da função na variável.
         String senhaConfirmada = cadastrarSenha(entrada);
 
@@ -263,7 +228,7 @@ public class CadastrarNoBanco {
         //Mostrar os dados da conta criada;
         System.out.print("\033[H\033[2J");
         System.out.println("============= Dados da Conta =============" );
-        bancoCriado.exibirDados(contaCriada.getNumeroDaConta());
+        System.out.println(bancoCriado.exibirDados(contaCriada.getNumeroDaConta()));
         System.out.println("==========================================" );
 
         System.out.println();
@@ -393,45 +358,10 @@ public class CadastrarNoBanco {
                 return false;
         }
 
-        Email emailCriado = servidorEmail.cadastrarEmail(emailDigitado);
-        servidorEmail.enviarMensagem(bancoCriado.enviarCodigo(emailDigitado));
-
-         //Enviar um código de verificação
-        emailCriado.exibirEmailsRecebidos();
-
-    try {
+        //Criar e verificar o e-mail
+        Email emailCriado = verificacaoDeEmail(entrada, servidorEmail, bancoCriado, emailDigitado);
         
-        System.out.println();
-        System.out.println("========== Verificação ==========");
-        System.out.println("Verifique o código enviado para o seu e-mail");
-        System.out.println("Digite o código: ");
-        Integer codigoDigitado = entrada.nextInt();
 
-        boolean codigoCorreto = false;
-
-            while (!(codigoCorreto)) {
-
-                if(!(bancoCriado.verificarCodigo(codigoDigitado))){
-                    System.out.println();
-                    System.out.println("Código de verificação incorreto!");
-                    System.out.println("Digite o código novamente: ");
-                    codigoDigitado = entrada.nextInt();
-            }
-
-            else{
-                codigoCorreto = true;
-            }
-        }
-
-    } catch (InputMismatchException e) {
-        System.out.print("\033[H\033[2J");
-        System.out.println("============ ATENÇÃO! ===========");
-        System.out.println("      Digite apenas números!     ");
-        System.out.println("=================================");
-        System.out.println("Pressione ENTER pra continuar.");
-        entrada.nextLine();
-        return false;
-    }
         // Guardar a senha criada através da função na variável.
         String senhaConfirmada = cadastrarSenha(entrada);
 
@@ -439,17 +369,9 @@ public class CadastrarNoBanco {
         Conta contaCriada = new ContaPJ(senhaConfirmada, nomeDigitado, cnpjDigitado, dataDigitada, emailCriado);
         bancoCriado.cadastrarConta(contaCriada);
 
-    System.out.print("\033[H\033[2J");
-    System.out.println("============= Dados da Conta =============" );
-    bancoCriado.exibirDados(contaCriada.getNumeroDaConta());
-    System.out.println("==========================================" );
-
-    System.out.println();
-    System.out.println("Pressione ENTER para continuar");
-    entrada.nextLine();
-    System.out.print("\033[H\033[2J");
-
-    return true;
+        //Exibir dados da conta e enviar os dados para o e-mail
+        exibirDados(entrada, bancoCriado, contaCriada, emailCriado, servidorEmail);
+        return true;
 }
 
 
@@ -460,7 +382,6 @@ public class CadastrarNoBanco {
         
             while (!senhaValida) {
 
-                entrada.nextLine();
                 System.out.print("\033[H\033[2J");
                 System.out.println("============== SENHA DA CONTA ============== ");
                 System.out.println();
@@ -555,6 +476,75 @@ public class CadastrarNoBanco {
     }        
 
 
-    public static void verificacaoDeEmail(){}
+    public static Email verificacaoDeEmail(Scanner entrada, Servidor servidorEmail, Banco bancoCriado, String emailDigitado){
+     
 
+        // Instância do Email.
+        Email emailValido = servidorEmail.cadastrarEmail(emailDigitado);
+
+        //Enviar um código de verificação
+        servidorEmail.enviarMensagem(bancoCriado.enviarCodigo(emailDigitado));
+        emailValido.exibirEmailsRecebidos();
+    
+        System.out.println();
+        System.out.println("========== Verificação ==========");
+        System.out.println("Verifique o código enviado para o seu e-mail");
+        System.out.println("Digite o código: ");
+        entrada.nextLine();
+        String codigoDigitado = entrada.nextLine();
+
+        boolean codigoCorreto = false;
+
+        do{
+            try {
+
+                Integer codigoValido = Integer.parseInt(codigoDigitado);
+        
+                if(!(bancoCriado.verificarCodigo(codigoValido))){
+                    System.out.println();
+                    System.out.println("Código de verificação incorreto!");
+                    System.out.println("Digite o código novamente: ");
+                    codigoDigitado = entrada.nextLine();
+                }
+
+                else{
+                    codigoCorreto = true;
+                    return emailValido;
+                }
+       
+
+            } catch (NumberFormatException e) {
+                System.out.print("\033[H\033[2J");
+                System.out.println("============ ATENÇÃO! ===========");
+                System.out.println("      Digite apenas números!     ");
+                System.out.println("=================================");
+                System.out.println("Pressione ENTER pra continuar.");
+                entrada.nextLine();
+                System.out.println("Digite o código novamente: ");
+                codigoDigitado = entrada.nextLine();
+            }
+            
+        } while(!codigoCorreto);
+
+    return null;
+}
+
+
+
+    public static void exibirDados(Scanner entrada, Banco bancoCriado, Conta contaCriada, Email emailValido, Servidor servidorEmail){
+
+    //Enviar um código de verificação
+    servidorEmail.enviarMensagem(bancoCriado.enviarCodigo(emailValido.getEmail()));
+    emailValido.exibirEmailsRecebidos();
+
+    System.out.print("\033[H\033[2J");
+    System.out.println("============= Dados da Conta =============" );
+    System.out.println(bancoCriado.exibirDados(contaCriada.getNumeroDaConta()));
+    System.out.println("==========================================" );
+    System.out.println("Enviamos os dados da sua conta para o seu e-mail.");
+    System.out.println();
+    System.out.println("Pressione ENTER para continuar");
+    entrada.nextLine();
+    System.out.print("\033[H\033[2J");
+    }
 }
