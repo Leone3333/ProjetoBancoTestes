@@ -5,6 +5,7 @@ import java.util.Random;
 
 import services.email.Email;
 import services.email.Mensagem;
+import entities.enums.EnumGet;
 
 // Classe que representa um Banco, responsável por gerenciar contas bancárias.
 public class Banco {
@@ -44,25 +45,36 @@ public class Banco {
         return this.numeroDaAgencia;
     }
 
+    public String getDados(int index, EnumGet dado){
+
+        switch (dado) {
+
+            case SENHA:
+                return contasNoBanco.get(index).getSenha();
+            case EMAIL:
+                return contasNoBanco.get(index).getEnderecoEmail();
+            case NOME:
+                return contasNoBanco.get(index).getNome();
+            case IDENTIFICACAO:
+                return contasNoBanco.get(index).getIdentificacao();
+            case DATA:
+                return contasNoBanco.get(index).getData();
+            case NUMERODACONTA:
+                return contasNoBanco.get(index).getNumeroDaConta();
+            case TIPODACONTA:
+                return contasNoBanco.get(index).getTipoDaConta();
+            case SALDO:
+                return contasNoBanco.get(index).getSaldo();
+            default:
+                return "Erro!";
+        }
+    }
+
     //Inicio dos métodos para pegar os dados de acordo com o index
     // Método para obter uma conta pelo índice na lista
     public Conta getConta(int index){
         return contasNoBanco.get(index);
     }
-
-    public String getSenhaConta(int index){
-        return contasNoBanco.get(index).getSenha();
-    }
-
-    public String getEmailConta(int index){
-        return contasNoBanco.get(index).getEnderecoEmail();
-    }
-
-    public String getNomeConta(int index){
-        return contasNoBanco.get(index).getNome();
-    }
-    //Fim dos métodos 
-
 
     // Método para adicionar uma conta à lista de contas do banco
     public void adicionarConta(Conta conta){

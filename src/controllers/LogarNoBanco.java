@@ -4,6 +4,7 @@ import java.util.Scanner;
 
 import services.email.*;
 import entities.*;
+import entities.enums.EnumGet;
 
 
 public class LogarNoBanco {
@@ -27,11 +28,11 @@ public class LogarNoBanco {
         Integer indexDoUsuario = null;
 
         for(int i = 0; i < bancoCriado.getContasNoBanco().size(); i++){
-            if (bancoCriado.getEmailConta(i).equals(emailParaLogar) && 
-                bancoCriado.getSenhaConta(i).equals(senhaParaLogar)){
+            if (bancoCriado.getDados(i, EnumGet.EMAIL).equals(emailParaLogar) && 
+                bancoCriado.getDados(i, EnumGet.SENHA).equals(senhaParaLogar)){
 
                 System.out.print("\033[H\033[2J");
-                System.out.println("Seja Bem-Vindo(a) " + bancoCriado.getNomeConta(i));
+                System.out.println("Seja Bem-Vindo(a) " + bancoCriado.getDados(i, EnumGet.NOME));
 
                 if (bancoCriado.getConta(i).getTipoDaConta().equals("Pessoa Física")) {
                     
