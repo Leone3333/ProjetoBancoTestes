@@ -16,7 +16,6 @@ public class Banco {
 
     private ArrayList<Conta> contasNoBanco; // Lista de contas no banco
 
-
     // Método construtor para criar o banco
     public Banco(String nomeDoBanco, String emailDoBanco) {
         this.nomeDoBanco = nomeDoBanco; // Inicializa o nome do banco
@@ -45,10 +44,25 @@ public class Banco {
         return this.numeroDaAgencia;
     }
 
+    //Inicio dos métodos para pegar os dados de acordo com o index
     // Método para obter uma conta pelo índice na lista
     public Conta getConta(int index){
         return contasNoBanco.get(index);
     }
+
+    public String getSenhaConta(int index){
+        return contasNoBanco.get(index).getSenha();
+    }
+
+    public String getEmailConta(int index){
+        return contasNoBanco.get(index).getEnderecoEmail();
+    }
+
+    public String getNomeConta(int index){
+        return contasNoBanco.get(index).getNome();
+    }
+    //Fim dos métodos 
+
 
     // Método para adicionar uma conta à lista de contas do banco
     public void adicionarConta(Conta conta){
@@ -71,10 +85,11 @@ public class Banco {
     }
 
     // Método para exibir as informações da conta de acordo com o tipo
-    public String exibirDados(String numeroDaConta){
+    public String exibirDados(String informacaoBusca){
 
         for(Conta conta : contasNoBanco){
-            if(conta.getNumeroDaConta().equals(numeroDaConta)){
+            if(conta.getNumeroDaConta().equals(informacaoBusca) || 
+            conta.getEnderecoEmail().equals(informacaoBusca)){
 
                 // Verificar se a conta é uma instância de ContaPF
                 if (conta instanceof ContaPF){
@@ -138,7 +153,8 @@ public class Banco {
 
     // Método para enviar os dados da conta criada para um destinatário por e-mail
     public Mensagem enviarDados(String emailDoDestinatario){
-        String contaCriada = "Boas notícias! Sua conta foi criada com sucesso. Estamos felizes por ter vc aqui" + "\n"
+        String contaCriada = "Boas notícias! Sua conta foi criada com sucesso." + "\n" 
+        + "Estamos felizes por ter vc aqui!" + "\n" + "\n"
         + "Agência: " + getNumeroDaAgencia() + "\n";
 
         String dados = contaCriada + exibirDados(emailDoDestinatario);

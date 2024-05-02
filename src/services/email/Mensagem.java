@@ -37,9 +37,10 @@ public class Mensagem {
         LocalDate dataHojeISO = LocalDate.now();
         LocalTime horasISO = LocalTime.now(); 
 
-        return "Enviado em " + dataHojeISO.format(dataFormatada) + " ás " 
+        return "=============================================="  + "\n"
+                + "Enviado em " + dataHojeISO.format(dataFormatada) + " ás " 
                 + horasISO.format(horasFormatada) + "\n" 
-                + "Remetente: " + remetente + "\n" 
+                + "Remetente: " + remetente + "\n" + "\n"
                 + mensagem + "\n";
     }
 

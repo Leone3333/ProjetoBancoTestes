@@ -31,7 +31,7 @@ public class Principal {
 
 
         //Instâncias dos usuários cadastrados
-        Conta conta1 = new ContaPF("12345678", "111.222.333-44", "Pedro Silva dos Santos", "14/01/2005", 
+        Conta conta1 = new ContaPF("12345678", "Pedro Silva dos Santos", "111.222.333-44", "14/01/2005", 
         new Email("pedro@gmail.com"));
         bancoCriado.adicionarConta(conta1);
 

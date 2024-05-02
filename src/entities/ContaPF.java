@@ -48,9 +48,5 @@ public class ContaPF extends Conta {
         this.dataDeNascimento = dataDeNascimento;
     }
 
-    // Método para definir o endereço de email da conta
-    @Override
-    public void setEnderecoEmail(Email enderecoEmail) {
-        this.enderecoEmail = enderecoEmail;
-    }
+    
 }

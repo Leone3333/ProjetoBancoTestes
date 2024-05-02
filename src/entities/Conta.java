@@ -26,13 +26,17 @@ public abstract class Conta{
     public abstract String getNome(); // Retorna o nome da empresa ou da pessoa
     public abstract String getData(); // Retorna a data de criação da empresa ou data de nascimento da pessoa física
 
-    public abstract void setEnderecoEmail(Email email); // Define o endereço de e-mail
     public abstract void setNome(String nome); // Define o nome da empresa ou da pessoa
     public abstract void setData(String data); // Define a data de criação da empresa ou data de nascimento da pessoa física
 
     // Retorna o endereço de e-mail
     public String getEnderecoEmail(){
         return this.enderecoEmail.getEmail();
+    }
+
+    //Mudar o endereço de e-mail
+    public void setEnderecoEmail(String email){
+        enderecoEmail.setEmail(email);
     }
 
     // Retorna o tipo da conta
@@ -46,8 +50,13 @@ public abstract class Conta{
     }
 
     // Retorna o saldo da conta
-    public double getSaldo(){
-        return this.saldoDaConta;
+    public String getSaldo(){
+        return String.format("%.2f", saldoDaConta);
+    }
+
+    //Retorna a senha da conta
+    public String getSenha(){
+        return this.senhaDaConta;
     }
 
     // Método para gerar um número de conta

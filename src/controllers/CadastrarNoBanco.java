@@ -23,7 +23,7 @@ public class CadastrarNoBanco {
     do{
        
         try{ 
-        System.out.println("=========== Cadastrar Conta =========");
+        System.out.println("=========== CADASTRAR CONTA =========");
         System.out.printf("[%d] Conta Pessoa Física %n", CONTAPF);
         System.out.printf("[%d] Conta Pessoa Jurídica %n", CONTAPJ);
         System.out.printf("[%d] Voltar %n", VOLTAR);
@@ -225,18 +225,9 @@ public class CadastrarNoBanco {
            
         bancoCriado.cadastrarConta(contaCriada);
 
-        //Mostrar os dados da conta criada;
-        System.out.print("\033[H\033[2J");
-        System.out.println("============= Dados da Conta =============" );
-        System.out.println(bancoCriado.exibirDados(contaCriada.getNumeroDaConta()));
-        System.out.println("==========================================" );
-
-        System.out.println();
-        System.out.println("Pressione ENTER para continuar");
-        entrada.nextLine();
-        System.out.print("\033[H\033[2J");
-
-        return true;
+       //Exibir dados da conta e enviar os dados para o e-mail
+       exibirDados(entrada, bancoCriado, contaCriada, emailCriado, servidorEmail);
+       return true;
 
     }
 
@@ -534,7 +525,7 @@ public class CadastrarNoBanco {
     public static void exibirDados(Scanner entrada, Banco bancoCriado, Conta contaCriada, Email emailValido, Servidor servidorEmail){
 
     //Enviar um código de verificação
-    servidorEmail.enviarMensagem(bancoCriado.enviarCodigo(emailValido.getEmail()));
+    servidorEmail.enviarMensagem(bancoCriado.enviarDados(emailValido.getEmail()));
     emailValido.exibirEmailsRecebidos();
 
     System.out.print("\033[H\033[2J");

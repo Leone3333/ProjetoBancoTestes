@@ -48,9 +48,4 @@ public class ContaPJ extends Conta {
         this.dataDeCriacao = dataDeCriacao;
     }
 
-    // Método para definir o endereço de email da conta
-    @Override
-    public void setEnderecoEmail(Email enderecoEmail) {
-        this.enderecoEmail = enderecoEmail;
-    }
 }

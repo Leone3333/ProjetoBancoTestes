@@ -1,19 +1,26 @@
 package controllers;
 
 import java.util.Scanner;
-
+import java.util.Locale;
 import entities.Banco;
 
 public class Operacoes {
 
     public static void depositar(Scanner entrada, Banco bancoCriado, Integer indexDoUsuario){
+        Locale.setDefault(Locale.US);
 
+        System.out.print("\033[H\033[2J");
         System.out.println("Digite o valor que deseja depositar: ");
-        double valorParaDeposito = entrada.nextDouble();
+        Double valorParaDeposito = entrada.nextDouble();
+        
+        bancoCriado.getConta(indexDoUsuario).depositar(valorParaDeposito);
+        
+        valorParaDeposito.toString();
+        String valorFormatado = String.format("%.2f", valorParaDeposito);
 
-        bancoCriado.getContasNoBanco().get(indexDoUsuario).depositar(valorParaDeposito);
-        System.out.println("Depósito no valor de R$ " + valorParaDeposito + " Realizado com Sucesso!");
-        System.out.println("Seu saldo atual é: " + bancoCriado.getContasNoBanco().get(indexDoUsuario).getSaldo());
+        System.out.print("\033[H\033[2J");
+        System.out.println("Depósito no valor de R$" + valorFormatado + " Realizado com Sucesso!");
+        System.out.println("Seu saldo atual é: R$" + bancoCriado.getConta(indexDoUsuario).getSaldo());
         
     }
 

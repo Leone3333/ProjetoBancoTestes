@@ -29,11 +29,18 @@ public class Email {
         return this.email;
     }
 
+    public void setEmail(String email){
+        this.email = email;
+    }
+
     // Método para adicionar uma mensagem recebida
     public void adicionarMensagem(Mensagem mensagem) {
         this.mensagensRecebidas.add(mensagem);
     }
 
+    public void deletarMensagem(int indexMensagem){
+        this.mensagensRecebidas.remove(indexMensagem);
+    }
 
     public void exibirEmailsRecebidos(){
 
@@ -42,11 +49,13 @@ public class Email {
 
         try(BufferedWriter arquivo = new BufferedWriter(new FileWriter(caminhoDoArquivo, true))){
 
-            for(Mensagem mensagem : mensagensRecebidas){
-        
-                arquivo.write(mensagem.exibirMensagem());
+            for(int index = 0; index < mensagensRecebidas.size(); index++){
+
+                arquivo.write(mensagensRecebidas.get(index).exibirMensagem());
+                deletarMensagem(index);
                 arquivo.newLine();
             }
+
 
         } catch(IOException e){
             System.out.println("Erro ao criar o arquivo!");

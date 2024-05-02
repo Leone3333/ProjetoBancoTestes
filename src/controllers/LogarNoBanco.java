@@ -16,24 +16,30 @@ public class LogarNoBanco {
         final int EXTRATO = 4;
         final int SAIR = 5;
 
-        System.out.println("Digite seu email: ");
         entrada.nextLine();
+        System.out.println("======== LOGIN ========");
+        System.out.println("E-mail: ");
         String emailParaLogar = entrada.nextLine();
+        System.out.println("Senha: ");
+        String senhaParaLogar = entrada.nextLine();
+        System.out.println("=======================");
 
-        boolean emailEncontrado = false;
         Integer indexDoUsuario = null;
 
         for(int i = 0; i < bancoCriado.getContasNoBanco().size(); i++){
-            if (bancoCriado.getConta(i).getEnderecoEmail().equals(emailParaLogar)) {
-            
-                System.out.println("Seja Bem-Vindo(a) " + bancoCriado.getContasNoBanco().get(i).getNome());
-                System.out.println("");
+            if (bancoCriado.getEmailConta(i).equals(emailParaLogar) && 
+                bancoCriado.getSenhaConta(i).equals(senhaParaLogar)){
+
+                System.out.print("\033[H\033[2J");
+                System.out.println("Seja Bem-Vindo(a) " + bancoCriado.getNomeConta(i));
 
                 if (bancoCriado.getConta(i).getTipoDaConta().equals("Pessoa Física")) {
                     
                     // Código para rodar em conta Pessoa física após login
                     indexDoUsuario = i;
+                    boolean running = true;
 
+                    do {
                     System.out.println("=========== Selecione a opção desejada: ===========");
                     System.out.println();
                     System.out.printf("[%d] Depositar%n", DEPOSITAR);
@@ -64,6 +70,7 @@ public class LogarNoBanco {
 
                         case SAIR:
 
+                            running = false;
                             break;
 
                         default:
@@ -71,7 +78,7 @@ public class LogarNoBanco {
                             break;
                     }
 
-                    
+                }while(running);
                     
 
                 }
@@ -82,7 +89,7 @@ public class LogarNoBanco {
 
                 }
 
-                emailEncontrado = true;
+                break;
             }
         }
 
