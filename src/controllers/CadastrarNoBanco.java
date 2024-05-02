@@ -221,7 +221,7 @@ public class CadastrarNoBanco {
         String senhaConfirmada = cadastrarSenha(entrada);
 
         // Instância da Conta Pessoa Física.
-        Conta contaCriada = new ContaPF(senhaConfirmada, cpfDigitado, nomeDigitado, dataDigitada, emailCriado);
+        Conta contaCriada = new ContaPF(senhaConfirmada, nomeDigitado, cpfDigitado, dataDigitada, emailCriado);
            
         bancoCriado.cadastrarConta(contaCriada);
 

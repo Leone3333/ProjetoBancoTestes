@@ -4,51 +4,53 @@ import java.util.Random;
 
 import services.email.Email;
 
+// Classe abstrata Conta que serve como modelo para ContaPF e ContaPJ
 public abstract class Conta{
 
+    // Atributos protegidos para serem acessados pelas subclasses
     protected String numeroDaConta;
     protected String tipoDaConta;
     protected String senhaDaConta;
     protected double saldoDaConta;
     protected Email enderecoEmail;
     
-    //Método construtor
-    public Conta(String senhaDaConta){
+    // Método construtor da classe Conta
+    public Conta(String senhaDaConta, Email enderecoEmail){
         this.senhaDaConta = senhaDaConta;
-        this.numeroDaConta = gerarNumeroDaConta();
+        this.enderecoEmail = enderecoEmail;
+        this.numeroDaConta = gerarNumeroDaConta(); // Gera um número de conta
     }
 
-    //Getters abstratos.
-    public abstract String getIdentificacao(); //Pegar a indentificacao sendo CPF ou CNPJ.
-    public abstract String getNome(); //Pegar o nome da empresa ou da pessoa.
-    public abstract String getData(); //Pegar a data de criação da empresa ou data de nascimento da pessoa física.
+    // Métodos abstratos a serem implementados pelas subclasses
+    public abstract String getIdentificacao(); // Retorna a identificação (CPF ou CNPJ)
+    public abstract String getNome(); // Retorna o nome da empresa ou da pessoa
+    public abstract String getData(); // Retorna a data de criação da empresa ou data de nascimento da pessoa física
 
-    //Setters abstratos.
-    public abstract void setEnderecoEmail(Email email); //Mudar o endereço de e-mail
-    public abstract void setNome(String nome); //Mudar o nome da empresa ou da pessoa
-    public abstract void setData(String data); //Mudar a data de criação da empresa ou data de nascimento da pessoa física.
+    public abstract void setEnderecoEmail(Email email); // Define o endereço de e-mail
+    public abstract void setNome(String nome); // Define o nome da empresa ou da pessoa
+    public abstract void setData(String data); // Define a data de criação da empresa ou data de nascimento da pessoa física
 
-    //Pegar e-mail.
+    // Retorna o endereço de e-mail
     public String getEnderecoEmail(){
         return this.enderecoEmail.getEmail();
     }
 
-    //Pegar o tipo da conta.
+    // Retorna o tipo da conta
     public String getTipoDaConta(){
         return this.tipoDaConta;
     }
 
-    //Pegar o numero da conta.
+    // Retorna o número da conta
     public String getNumeroDaConta(){
         return this.numeroDaConta;
     }
 
-    //pegar o saldo da conta.
+    // Retorna o saldo da conta
     public double getSaldo(){
         return this.saldoDaConta;
     }
 
-    //Gerar uma conta.
+    // Método para gerar um número de conta
     public String gerarNumeroDaConta(){
         Random range = new Random();
         Integer codigo = range.nextInt(99999 - 10000 + 1) + 10000;
@@ -57,6 +59,7 @@ public abstract class Conta{
         return idGerado;
     }
 
+    // Método para depositar dinheiro na conta
     public void depositar(double valor){
         this.saldoDaConta += valor;
     }

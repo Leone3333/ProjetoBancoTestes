@@ -6,50 +6,56 @@ import java.util.Random;
 import services.email.Email;
 import services.email.Mensagem;
 
+// Classe que representa um Banco, responsável por gerenciar contas bancárias.
 public class Banco {
     
-    private String nomeDoBanco;
-    private Email emailDoBanco;
-    private String numeroDaAgencia;
-    private Integer codigoEnviado;
+    private String nomeDoBanco; // Nome do banco
+    private Email emailDoBanco; // Endereço de e-mail do banco
+    private String numeroDaAgencia; // Número da agência bancária
+    private Integer codigoEnviado; // Código enviado para verificação
 
-    private ArrayList<Conta> contasNoBanco;
+    private ArrayList<Conta> contasNoBanco; // Lista de contas no banco
 
 
-    //Método construtor para criar o banco
+    // Método construtor para criar o banco
     public Banco(String nomeDoBanco, String emailDoBanco) {
-        this.nomeDoBanco = nomeDoBanco;
-        this.numeroDaAgencia = gerarNumeroDaAgencia();
-
-        this.emailDoBanco = new Email(emailDoBanco);
-        this.contasNoBanco = new ArrayList<>();
+        this.nomeDoBanco = nomeDoBanco; // Inicializa o nome do banco
+        this.numeroDaAgencia = gerarNumeroDaAgencia(); // Gera o número da agência
+        this.emailDoBanco = new Email(emailDoBanco); // Inicializa o endereço de e-mail do banco
+        this.contasNoBanco = new ArrayList<>(); // Inicializa a lista de contas
     }
 
+    // Método para obter o nome do banco
     public String getNomeDoBanco() {
         return this.nomeDoBanco;
     }
 
+    // Método para obter a lista de contas no banco
     public ArrayList<Conta> getContasNoBanco() {
         return this.contasNoBanco;
     }
 
+    // Método para obter o endereço de e-mail do banco
     public String getEmailDoBanco() {
         return this.emailDoBanco.getEmail();
     }
 
+    // Método para obter o número da agência bancária
     public String getNumeroDaAgencia() {
         return this.numeroDaAgencia;
     }
 
+    // Método para obter uma conta pelo índice na lista
     public Conta getConta(int index){
         return contasNoBanco.get(index);
     }
 
+    // Método para adicionar uma conta à lista de contas do banco
     public void adicionarConta(Conta conta){
         this.contasNoBanco.add(conta);
     }
 
-    //Método para gerar um numero da agência. Ex: 1234-5
+    // Método para gerar um número da agência
     public String gerarNumeroDaAgencia(){
         Random range = new Random();
         Integer codigo = range.nextInt(9999 - 1000 + 1) + 1000;
@@ -59,19 +65,18 @@ public class Banco {
     }
     
 
-    //Adicionar a conta no banco(na lista das contasNoBanco)
+    // Método para cadastrar uma nova conta no banco
     public void cadastrarConta(Conta contaNova){
         contasNoBanco.add(contaNova);
     }
 
-
-    //Exibir as informações da conta de acordo com o tipo
+    // Método para exibir as informações da conta de acordo com o tipo
     public String exibirDados(String numeroDaConta){
 
         for(Conta conta : contasNoBanco){
             if(conta.getNumeroDaConta().equals(numeroDaConta)){
 
-                //Verificar se a conta é uma instância de ContaPF
+                // Verificar se a conta é uma instância de ContaPF
                 if (conta instanceof ContaPF){
                     return "Nome da Empresa: " + conta.getNome() + "\n"
                     + "Data de criação: " + conta.getData() + "\n"
@@ -97,6 +102,7 @@ public class Banco {
 
     }
 
+    // Método para verificar se uma conta existe com base em um dado (CPF/CNPJ ou e-mail)
     public Integer contaExiste(String dado){
         for(int index = 0; index < contasNoBanco.size(); index++){
             if(contasNoBanco.get(index).getIdentificacao().equals(dado)){
@@ -110,6 +116,7 @@ public class Banco {
         return null;
     }
 
+    // Método para enviar um código de verificação para um destinatário por e-mail
     public Mensagem enviarCodigo(String emailDoDestinatario){
 
         Random range = new Random();
@@ -121,6 +128,7 @@ public class Banco {
 
     }
 
+    // Método para verificar se um código digitado corresponde ao código enviado anteriormente
     public boolean verificarCodigo(Integer codigoDigitado){
         if(codigoDigitado.equals(codigoEnviado)){
             return true;
@@ -128,6 +136,7 @@ public class Banco {
         return false; 
     }
 
+    // Método para enviar os dados da conta criada para um destinatário por e-mail
     public Mensagem enviarDados(String emailDoDestinatario){
         String contaCriada = "Boas notícias! Sua conta foi criada com sucesso. Estamos felizes por ter vc aqui" + "\n"
         + "Agência: " + getNumeroDaAgencia() + "\n";
