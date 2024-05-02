@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 import services.email.*;
 import entities.*;
-import entities.enums.EnumGet;
+import entities.enums.TipoDeDado;
 
 
 public class LogarNoBanco {
@@ -28,13 +28,13 @@ public class LogarNoBanco {
         Integer indexDoUsuario = null;
 
         for(int i = 0; i < bancoCriado.getContasNoBanco().size(); i++){
-            if (bancoCriado.getDados(i, EnumGet.EMAIL).equals(emailParaLogar) && 
-                bancoCriado.getDados(i, EnumGet.SENHA).equals(senhaParaLogar)){
+            if (bancoCriado.getDados(i, TipoDeDado.EMAIL).equals(emailParaLogar) && 
+                bancoCriado.getDados(i, TipoDeDado.SENHA).equals(senhaParaLogar)){
 
                 System.out.print("\033[H\033[2J");
-                System.out.println("Seja Bem-Vindo(a) " + bancoCriado.getDados(i, EnumGet.NOME));
+                System.out.println("Seja Bem-Vindo(a) " + bancoCriado.getDados(i, TipoDeDado.NOME));
 
-                if (bancoCriado.getConta(i).getTipoDaConta().equals("Pessoa Física")) {
+                if (bancoCriado.getDados(i, TipoDeDado.TIPODACONTA).equals("Pessoa Física")) {
                     
                     // Código para rodar em conta Pessoa física após login
                     indexDoUsuario = i;
@@ -83,7 +83,7 @@ public class LogarNoBanco {
                     
 
                 }
-                else if(bancoCriado.getConta(i).getTipoDaConta().equals("Pessoa Jurídica")) {
+                else if(bancoCriado.getDados(i, TipoDeDado.TIPODACONTA).equals("Pessoa Jurídica")) {
                 
                     // Código para rodar em conta Pessoa jurídica após login
                     System.out.println("Deu certo, pessoa jurídica");

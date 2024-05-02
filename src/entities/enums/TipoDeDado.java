@@ -1,6 +1,6 @@
 package entities.enums;
 
-public enum EnumGet {
+public enum TipoDeDado {
     
     CONTA,
     EMAIL,
