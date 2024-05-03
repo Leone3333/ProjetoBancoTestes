@@ -1,6 +1,7 @@
 package validation;
 
 import java.time.LocalDate;
+import java.time.Period;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.Scanner;
@@ -9,74 +10,77 @@ import entities.*;
 import services.email.Email;
 import services.email.Servidor;
 
-public class ValidacaoPJ{
+public class ValidarPF{
 
-   //Solicitar e Validar o Nome da empresa. 
-   public static String solicitarEValidarNome(Scanner entrada){
+    //Solicitar e Validar o Nome. 
+    public static String solicitarEValidarNome(Scanner entrada){
 
-    boolean nomeValido = false;
-    String nomeDigitado;
+        boolean nomeValido = false;
+        String nomeDigitado;
 
-    do {
-        System.out.println("Nome Completo da empresa: ");
-        nomeDigitado  = entrada.nextLine().trim();
+        do {
+            System.out.println("Nome Completo do titular: ");
+            nomeDigitado  = entrada.nextLine().trim();
 
-        //Se o nomeDigitado estiver vazio.
-        if(nomeDigitado.isEmpty()){
-            System.out.println("O campo não pode estar vazio!");
-        }        
+            //Se o nomeDigitado estiver vazio.
+            if(nomeDigitado.isEmpty()){
+                System.out.println("O campo não pode estar vazio!");
+            }        
 
-        //Se o nomeDigitado segue a regra de ter de a-z e A-Z.
-        else if (!(nomeDigitado.matches("^[a-zA-Z\\s]*$"))){
-            System.out.println("Digite apenas letras!");
-        }
-
-        else{
-            nomeValido = true;
-        }
-
-    } while(!nomeValido);
-
-    return nomeDigitado;
-}
-
-    //Solicitar e Validar o CNPJ. 
-    public static String solicitarEValidarCNPJ(Scanner entrada, Banco bancoCriado){
-
-        boolean cnpjValido = false;
-        String cnpjDigitado;
-
-        do{
-            System.out.println("CNPJ da Empresa: ");
-            cnpjDigitado = entrada.nextLine().trim();
-
-            //Se o cpfDigitado estiver vazio.
-            if(cnpjDigitado.isEmpty()){
-                System.out.println("O campo não pode estar vazio");
-
-            } else if(!cnpjDigitado.matches("[0-9]{2}[.][0-9]{3}[.][0-9]{3}[/][0-9]{4}[-][0-9]{2}")){ 
-                System.out.println("O CNPJ deve ser válido! No formato 00.000.000/0001-00"); 
-
-            }  else if(ValidarDadosExistentes.validar(bancoCriado, cnpjDigitado, entrada)){
-                System.out.println("O CNPJ " + cnpjDigitado + " já está cadastrado." );
-
-            } else{
-                cnpjValido = true;
+            //Se o nomeDigitado segue a regra de ter de a-z e A-Z.
+            else if (!(nomeDigitado.matches("^[a-zA-Z\\s]*$"))){
+                System.out.println("Digite apenas letras!");
+                System.out.println();
             }
-            
-        } while(!cnpjValido);
 
-        return cnpjDigitado;
+            else{
+                nomeValido = true;
+            }
+
+        } while(!nomeValido);
+
+        return nomeDigitado;
     }
 
-    //Solicitar e Validar a data de criação da empresa. 
-    public static String solicitarEValidarDataDeCriacao(Scanner entrada){
+    //Solicitar e Validar o CPF. 
+    public static String solicitarEValidarCPF(Scanner entrada, Banco bancoCriado){
+
+        boolean cpfValido = false;
+        String cpfDigitado;
+
+        do{
+            System.out.println("CPF do titular: ");
+            cpfDigitado = entrada.nextLine().trim();
+
+            //Se o cpfDigitado estiver vazio.
+            if(cpfDigitado.isEmpty()){
+                System.out.println("O campo não pode estar vazio");
+                
+            } else if(!cpfDigitado.matches("[0-9]{3}[.][0-9]{3}[.][0-9]{3}[-][0-9]{2}")){ 
+                System.out.println("O CPF deve ser válido! No formato 111.222.333-44"); 
+                System.out.println();
+                
+            } else if(ValidarDadosExistentes.validar(bancoCriado, cpfDigitado, entrada)){
+                System.out.println("O CPF " + cpfDigitado + " já está cadastrado." );
+                System.out.println();
+
+            } else{
+                cpfValido = true;
+            }
+            
+        } while(!cpfValido);
+
+        return cpfDigitado;
+    }
+
+    //Solicitar e Validar a data de nascimento. 
+    public static String solicitarEValidarDataDeNascimento(Scanner entrada){
 
         boolean dataValida = false;
         String dataDigitada;
 
         do{
-            System.out.println("Data de criação da empresa (dd/mm/yyyy): ");
+            System.out.println("Data de nascimento (dd/mm/yyyy): ");
             dataDigitada = entrada.nextLine().trim(); 
 
             //Se a dataDigitada estiver vazio.
@@ -95,14 +99,27 @@ public class ValidacaoPJ{
                     data.getMonthValue() != Integer.parseInt(dataDigitada.substring(3, 5))) {
                     throw new DateTimeParseException("Data inválida", dataDigitada, 0);
                 }
+            
+                LocalDate atual = LocalDate.now();
+                Period periodo = Period.between(data, atual);
+                
+                // Verificar se a pessoa tem menos de 18 anos
+                if(periodo.getYears() < 18){
+                    System.out.println("Menor de idade não pode abrir uma conta!");
+                    System.out.println("Pressione ENTER pra continuar.");
+                    entrada.nextLine();
+                    System.out.println();
+                    return null;
+                }
 
-                else {
+                else{
                     dataValida = true;
                 }
                 
             } catch(DateTimeParseException e){
                 // Se a data for inválida, este bloco será executado
                 System.out.println("A data deve ser válida! No formato dd/mm/yyyy");
+                System.out.println();
             }
 
         } while(!dataValida);
@@ -129,20 +146,22 @@ public class ValidacaoPJ{
             //Se o emailDigitado contém @.
             else if(!(emailDigitado.matches("^[a-zA-Z0-9._+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$"))){
                 System.out.println("Digite um e-mail válido! Ex: nome@seudominio.com.br");
+                System.out.println();
             }
 
              else if(ValidarDadosExistentes.validar(bancoCriado, emailDigitado, entrada)){
-                System.out.println("O E-mail " + emailDigitado + " já está cadastrado." );        
+                System.out.println("O E-mail " + emailDigitado + " já está cadastrado." );   
+                System.out.println();
             }
 
             else {
-                emailVerificado = ValidacaoEmail.verificacaoDeEmail(entrada, servidorEmail, bancoCriado, emailDigitado);
+                emailVerificado = ValidarEmail.verificacaoDeEmail(entrada, servidorEmail, bancoCriado, emailDigitado);
                 if (emailVerificado != null) {
                     return emailVerificado;
                 }
             }
 
-        } while(!emailValido);
+        }while(!emailValido);
     
         return null;
     }
@@ -153,7 +172,6 @@ public class ValidacaoPJ{
         boolean senhaValida = false;
         String senhaConfirmada = null;
 
-        entrada.nextLine();
         System.out.print("\033[H\033[2J");
         System.out.println("============== SENHA DA CONTA ============== ");
         System.out.println();
@@ -171,12 +189,14 @@ public class ValidacaoPJ{
             // Verifica se a senha contém apenas números
             else if (!senhaDigitada.matches("\\d+")) {
                 System.out.println("A senha deve conter somente números!");
+                System.out.println();
                 senhaDigitada = null;
             }
 
             // Verifica se a senha tem 8 dígitos
             else if (senhaDigitada.length() != 8) {
                 System.out.println("A senha deve conter 8 dígitos!");
+                System.out.println();
                 senhaDigitada = null;
             }
 
@@ -192,6 +212,7 @@ public class ValidacaoPJ{
 
                 } else {
                     System.out.println("As senhas não são iguais!");
+                    System.out.println();
                 }
             }   
         

@@ -105,9 +105,9 @@ public class Banco {
 
                 // Verificar se a conta é uma instância de ContaPF
                 if (conta instanceof ContaPF){
-                    return "Nome da Empresa: " + conta.getNome() + "\n"
-                    + "Data de criação: " + conta.getData() + "\n"
-                    + "CNPJ: " + conta.getIdentificacao() + "\n"
+                    return "Nome do Titular: " + conta.getNome() + "\n"
+                    + "Data de nascimento: " + conta.getData() + "\n"
+                    + "CPF: " + conta.getIdentificacao() + "\n"
                     + "Tipo da Conta: " + conta.getTipoDaConta() + "\n"
                     + "Número da conta: " + conta.getNumeroDaConta() + "\n"
                     + "Endereço de e-mail " + conta.getEnderecoEmail();

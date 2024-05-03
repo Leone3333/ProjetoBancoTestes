@@ -7,8 +7,8 @@ import java.util.InputMismatchException;
 
 import entities.*;
 import services.email.*;
-import validation.ValidacaoPF;
-import validation.ValidacaoPJ;
+import validation.ValidarPF;
+import validation.ValidarPJ;
 
 public class CadastrarNoBanco {
     public static void cadastrarNoBanco(Scanner entrada, Banco bancoCriado, Servidor servidorEmail){
@@ -33,22 +33,17 @@ public class CadastrarNoBanco {
         System.out.println("Digite uma opção: ");
         int opcao = entrada.nextInt();
 
-        //Se o cadastro for feito, ou desejar sair, o valor muda para true, encerrando o loop.
-        boolean cadastroFeito = false;
         
         switch (opcao) {
 
             case CONTAPF:
-                while(!cadastroFeito){
-                    cadastroFeito = cadastrarPF(entrada, bancoCriado, servidorEmail);}
-
+                cadastrarPF(entrada, bancoCriado, servidorEmail);
                 running = false;
                 break;
 
             case CONTAPJ:
-                while(!cadastroFeito){
-                    cadastroFeito = cadastrarPJ(entrada, bancoCriado, servidorEmail);}
-
+                
+                cadastrarPJ(entrada, bancoCriado, servidorEmail);
                 running = false;
                 break;
 
@@ -85,20 +80,15 @@ public class CadastrarNoBanco {
 
         System.out.println("========= CADASTRAR CONTA PESSOA FÍSICA =========");
 
-        String nome = ValidacaoPF.solicitarEValidarNome(entrada);
-        if(nome == null) return false;
+        String nome = ValidarPF.solicitarEValidarNome(entrada);
 
-        String cpf = ValidacaoPF.solicitarEValidarCPF(entrada, bancoCriado);
-        if(cpf == null) return false;
+        String cpf = ValidarPF.solicitarEValidarCPF(entrada, bancoCriado);
 
-        String data = ValidacaoPF.solicitarEValidarDataDeNascimento(entrada);
-        if(data == null) return false;
+        String data = ValidarPF.solicitarEValidarDataDeNascimento(entrada);
 
-        Email email = ValidacaoPF.solicitarEValidarEmail(entrada, bancoCriado, servidorEmail);
-        if(email == null) return false;
+        Email email = ValidarPF.solicitarEValidarEmail(entrada, bancoCriado, servidorEmail);
         
-        String senha = ValidacaoPF.solicitarEValidarSenha(entrada);
-        if(senha == null) return false;
+        String senha = ValidarPF.solicitarEValidarSenha(entrada);
 
         // Instância da Conta Pessoa Física.
         Conta contaCriada = new ContaPF(senha, nome, cpf, data, email);
@@ -117,20 +107,15 @@ public class CadastrarNoBanco {
         System.out.print("\033[H\033[2J");
         System.out.println("========= CADASTRAR CONTA PESSOA JURÍDICA =========");
 
-        String nome = ValidacaoPJ.solicitarEValidarNome(entrada);
-        if(nome == null) return false;
+        String nome = ValidarPJ.solicitarEValidarNome(entrada);
 
-        String cnpj = ValidacaoPJ.solicitarEValidarCNPJ(entrada, bancoCriado);
-        if(cnpj == null) return false;
+        String cnpj = ValidarPJ.solicitarEValidarCNPJ(entrada, bancoCriado);
 
-        String data = ValidacaoPJ.solicitarEValidarDataDeCriacao(entrada);
-        if(data == null) return false;
+        String data = ValidarPJ.solicitarEValidarDataDeCriacao(entrada);
 
-        Email email = ValidacaoPJ.solicitarEValidarEmail(entrada, bancoCriado, servidorEmail);
-        if(email == null) return false;
+        Email email = ValidarPJ.solicitarEValidarEmail(entrada, bancoCriado, servidorEmail);
         
-        String senha = ValidacaoPJ.solicitarEValidarSenha(entrada);
-        if(senha == null) return false;
+        String senha = ValidarPJ.solicitarEValidarSenha(entrada);
 
         // Instância da Conta Pessoa Física.
         Conta contaCriada = new ContaPJ(senha, nome, cnpj, data, email);
