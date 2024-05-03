@@ -15,7 +15,8 @@ public class LogarNoBanco {
         final int SACAR = 2;
         final int TRANSFERIR = 3;
         final int EXTRATO = 4;
-        final int SAIR = 5;
+        final int ATUALIZARDADOS = 5;
+        final int SAIR = 6;
 
         entrada.nextLine();
         System.out.println("======== LOGIN ========");
@@ -42,12 +43,13 @@ public class LogarNoBanco {
 
                     do {
                     System.out.println("=========== Selecione a opção desejada: ===========");
-                    System.out.println();
                     System.out.printf("[%d] Depositar%n", DEPOSITAR);
                     System.out.printf("[%d] Sacar%n", SACAR);
                     System.out.printf("[%d] Transferir%n", TRANSFERIR);
                     System.out.printf("[%d] Extrato%n", EXTRATO);
+                    System.out.printf("[%d] Atualizar Dados%n", ATUALIZARDADOS);
                     System.out.printf("[%d] Sair%n", SAIR);
+                    System.out.println("===================================================");
                     
                     int opcaoDigitada = entrada.nextInt();
 
@@ -69,6 +71,10 @@ public class LogarNoBanco {
 
                             break;
 
+
+                        case ATUALIZARDADOS:
+                            AtualizarDadosConta.atualizarDadosConta(entrada, bancoCriado, indexDoUsuario);
+                            break;
                         case SAIR:
 
                             running = false;
@@ -83,10 +89,59 @@ public class LogarNoBanco {
                     
 
                 }
+
                 else if(bancoCriado.getDados(i, TipoDeDado.TIPODACONTA).equals("Pessoa Jurídica")) {
                 
-                    // Código para rodar em conta Pessoa jurídica após login
-                    System.out.println("Deu certo, pessoa jurídica");
+                    // Código para rodar em conta Pessoa física após login
+                    indexDoUsuario = i;
+                    boolean running = true;
+
+                    do {
+                    System.out.println("=========== Selecione a opção desejada: ===========");
+                    System.out.printf("[%d] Depositar%n", DEPOSITAR);
+                    System.out.printf("[%d] Sacar%n", SACAR);
+                    System.out.printf("[%d] Transferir%n", TRANSFERIR);
+                    System.out.printf("[%d] Extrato%n", EXTRATO);
+                    System.out.printf("[%d] Atualizar Dados%n", ATUALIZARDADOS);
+                    System.out.printf("[%d] Sair%n", SAIR);
+                    System.out.println("===================================================");
+                    
+                    int opcaoDigitada = entrada.nextInt();
+
+                    switch (opcaoDigitada) {
+                        case DEPOSITAR:
+                            // depositar
+                            Operacoes.depositar(entrada, bancoCriado, indexDoUsuario);
+                            break;
+
+                        case SACAR:
+                            // sacar
+                            break;
+
+                        case TRANSFERIR:
+                            // transferir
+                            break;
+                        
+                        case EXTRATO:
+
+                            break;
+
+
+                        case ATUALIZARDADOS:
+                            AtualizarDadosConta.atualizarDadosConta(entrada, bancoCriado, indexDoUsuario);
+                            break;
+                        case SAIR:
+
+                            running = false;
+                            break;
+
+                        default:
+                            System.out.println("Digite uma opção válida!");
+                            break;
+                    }
+
+                }while(running);
+                    
 
                 }
 

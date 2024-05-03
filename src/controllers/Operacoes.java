@@ -8,6 +8,7 @@ import entities.enums.TipoDeDado;
 public class Operacoes {
 
     public static void depositar(Scanner entrada, Banco bancoCriado, Integer indexDoUsuario){
+        
         Locale.setDefault(Locale.US);
 
         System.out.print("\033[H\033[2J");
@@ -21,13 +22,13 @@ public class Operacoes {
 
         System.out.print("\033[H\033[2J");
         System.out.println("Depósito no valor de R$" + valorFormatado + " Realizado com Sucesso!");
-        System.out.println("Seu saldo atual é: R$" + bancoCriado.getConta(indexDoUsuario).getSaldo());
+        System.out.println("Seu saldo atual é: R$" + bancoCriado.getDados(indexDoUsuario, TipoDeDado.SALDO));
         
     }
 
     public static void sacar(Scanner entrada, Banco bancoCriado, Integer indexDoUsuario){
 
-        System.out.println(bancoCriado.getContasNoBanco().get(indexDoUsuario).getEnderecoEmail()); 
+        System.out.println(bancoCriado.getDados(indexDoUsuario, TipoDeDado.EMAIL)); 
         System.out.println();
         System.out.println("Estamos na tela de sacar, deu certo");
     }
@@ -42,7 +43,7 @@ public class Operacoes {
 
     public static void extrato(Scanner entrada, Banco bancoCriado, Integer indexDoUsuario){
 
-        System.out.println(bancoCriado.getContasNoBanco().get(indexDoUsuario).getEnderecoEmail()); 
+        System.out.println(bancoCriado.getDados(indexDoUsuario, TipoDeDado.EMAIL)); 
         System.out.println();
         System.out.println("Estamos na tela de extrato, deu certo");
 

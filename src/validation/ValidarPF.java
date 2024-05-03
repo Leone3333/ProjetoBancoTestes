@@ -15,6 +15,7 @@ public class ValidarPF{
     //Solicitar e Validar o Nome. 
     public static String solicitarEValidarNome(Scanner entrada){
 
+        entrada.nextLine();
         boolean nomeValido = false;
         String nomeDigitado;
 

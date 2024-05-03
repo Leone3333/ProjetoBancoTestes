@@ -1,6 +1,7 @@
 package entities;
 
 import java.util.Random;
+import java.util.Scanner;
 
 import services.email.Email;
 
@@ -26,8 +27,8 @@ public abstract class Conta{
     public abstract String getNome(); // Retorna o nome da empresa ou da pessoa
     public abstract String getData(); // Retorna a data de criação da empresa ou data de nascimento da pessoa física
 
-    public abstract void setNome(String nome); // Define o nome da empresa ou da pessoa
-    public abstract void setData(String data); // Define a data de criação da empresa ou data de nascimento da pessoa física
+    public abstract void setNome(Scanner entrada); // Define o nome da empresa ou da pessoa
+    public abstract void setData(Scanner entrada); // Define a data de criação da empresa ou data de nascimento da pessoa física
 
     // Retorna o endereço de e-mail
     public String getEnderecoEmail(){

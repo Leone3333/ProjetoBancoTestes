@@ -1,6 +1,9 @@
 package entities;
 
+import java.util.Scanner;
+
 import services.email.Email;
+import validation.ValidarPF;
 
 // Classe que representa uma conta de Pessoa Física (ContaPF), que é uma subclasse de Conta.
 public class ContaPF extends Conta {
@@ -39,14 +42,16 @@ public class ContaPF extends Conta {
 
     // Método para definir o nome do titular da conta
     @Override
-    public void setNome(String nomeDoTitular) {
-        this.nomeDoTitular = nomeDoTitular;
+    public void setNome(Scanner entrada) {
+
+        this.nomeDoTitular = ValidarPF.solicitarEValidarNome(entrada);
     }
 
     // Método para definir a data de nascimento do titular da conta
     @Override
-    public void setData(String dataDeNascimento) {
-        this.dataDeNascimento = dataDeNascimento;
+    public void setData(Scanner entrada) {
+        this.nomeDoTitular = ValidarPF.solicitarEValidarNome(entrada);
+
     }
 
     

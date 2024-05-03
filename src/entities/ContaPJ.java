@@ -1,6 +1,9 @@
 package entities;
 
+import java.util.Scanner;
+
 import services.email.Email;
+import validation.ValidarPJ;
 
 // Classe que representa uma conta de Pessoa Jurídica (ContaPJ), que é uma subclasse de Conta.
 public class ContaPJ extends Conta {
@@ -38,14 +41,16 @@ public class ContaPJ extends Conta {
 
     // Método para definir o nome da empresa
     @Override
-    public void setNome(String nomeDaEmpresa) {
-        this.nomeDaEmpresa = nomeDaEmpresa;
+    public void setNome(Scanner entrada) {
+    
+        this.nomeDaEmpresa = ValidarPJ.solicitarEValidarNome(entrada);
+
     }
 
     // Método para definir a data de criação da empresa
     @Override
-    public void setData(String dataDeCriacao) {
-        this.dataDeCriacao = dataDeCriacao;
+    public void setData(Scanner entrada) {
+        this.dataDeCriacao = ValidarPJ.solicitarEValidarNome(entrada);
     }
 
 }
