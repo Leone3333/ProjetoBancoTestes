@@ -33,11 +33,11 @@ public class Principal {
         //Instâncias dos usuários cadastrados
         Conta conta1 = new ContaPF("12345678", "Pedro Silva dos Santos", "111.222.333-44", "14/01/2005", 
         new Email("pedro@gmail.com"));
-        bancoCriado.adicionarConta(conta1);
+        bancoCriado.cadastrarConta(conta1);
 
         Conta conta2 = new ContaPJ("12345678", "Aliexpress", "11.222.333/0001-44", "12/04/2002", 
         new Email("aliexpress@gmail.com"));
-        bancoCriado.adicionarConta(conta2);
+        bancoCriado.cadastrarConta(conta2);
 
         //Flag para controlar o fluxo do programa.
         boolean running = true;

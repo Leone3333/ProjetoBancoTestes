@@ -17,6 +17,8 @@ public class Banco {
 
     private ArrayList<Conta> contasNoBanco; // Lista de contas no banco
 
+
+
     // Método construtor para criar o banco
     public Banco(String nomeDoBanco, String emailDoBanco) {
         this.nomeDoBanco = nomeDoBanco; // Inicializa o nome do banco
@@ -77,7 +79,7 @@ public class Banco {
     }
 
     // Método para adicionar uma conta à lista de contas do banco
-    public void adicionarConta(Conta conta){
+    public void cadastrarConta(Conta conta){
         this.contasNoBanco.add(conta);
     }
 
@@ -88,12 +90,6 @@ public class Banco {
         Integer digito = range.nextInt(9 - 1 + 1) + 1;
         String idGerado = codigo.toString() + "-" + digito.toString();
         return idGerado;
-    }
-    
-
-    // Método para cadastrar uma nova conta no banco
-    public void cadastrarConta(Conta contaNova){
-        contasNoBanco.add(contaNova);
     }
 
     // Método para exibir as informações da conta de acordo com o tipo

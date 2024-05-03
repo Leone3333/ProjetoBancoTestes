@@ -4,10 +4,10 @@ import java.util.Random;
 
 import services.email.Email;
 
-// Classe abstrata Conta que serve como modelo para ContaPF e ContaPJ
+// Classe abstrata Conta que serve como modelo para ContaPF e ContaPJ  
 public abstract class Conta{
 
-    // Atributos protegidos para serem acessados pelas subclasses
+    // Atributos protegidos para serem acessados pelas subclasses.
     protected String numeroDaConta;
     protected String tipoDaConta;
     protected String senhaDaConta;
@@ -62,9 +62,9 @@ public abstract class Conta{
     // Método para gerar um número de conta
     public String gerarNumeroDaConta(){
         Random range = new Random();
-        Integer codigo = range.nextInt(99999 - 10000 + 1) + 10000;
-        Integer digito = range.nextInt(9 - 1 + 1) + 1;
-        String idGerado = codigo.toString() + "-" + digito.toString();
+        Integer codigo = range.nextInt(99999 - 10000 + 1) + 10000; //entre 10000 e 99999  
+        Integer digito = range.nextInt(9 - 1 + 1) + 1; //entre 1 e 9 
+        String idGerado = codigo.toString() + "-" + digito.toString(); 
         return idGerado;
     }
 
