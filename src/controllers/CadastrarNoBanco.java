@@ -1,12 +1,11 @@
 package controllers;
 
-
 import java.util.Scanner;
 import java.util.InputMismatchException;
 
-
 import entities.*;
 import services.email.*;
+
 import validation.ValidarPF;
 import validation.ValidarPJ;
 
@@ -69,11 +68,12 @@ public class CadastrarNoBanco {
                 entrada.nextLine();
 
             }
+            
         } while(running);
     } 
 
     //Função para criar uma conta Pessoa Física.
-    public static boolean cadastrarPF(Scanner entrada, Banco bancoCriado, Servidor servidorEmail){
+    public static void cadastrarPF(Scanner entrada, Banco bancoCriado, Servidor servidorEmail){
         
         entrada.nextLine();
         System.out.print("\033[H\033[2J");
@@ -95,13 +95,11 @@ public class CadastrarNoBanco {
         bancoCriado.cadastrarConta(contaCriada);
 
        //Exibir dados da conta e enviar os dados para o e-mail
-       exibirDados(entrada, bancoCriado, contaCriada, email, servidorEmail);
-       return true;
-       
+       exibirDados(entrada, bancoCriado, contaCriada, email, servidorEmail);       
     }
 
     //Função para criar uma conta Pessoa Jurídica.
-    public static boolean cadastrarPJ(Scanner entrada, Banco bancoCriado, Servidor servidorEmail) {
+    public static void cadastrarPJ(Scanner entrada, Banco bancoCriado, Servidor servidorEmail) {
 
         entrada.nextLine();
         System.out.print("\033[H\033[2J");
@@ -123,7 +121,6 @@ public class CadastrarNoBanco {
 
         //Exibir dados da conta e enviar os dados para o e-mail
         exibirDados(entrada, bancoCriado, contaCriada, email, servidorEmail);
-        return true;
     }
     
 

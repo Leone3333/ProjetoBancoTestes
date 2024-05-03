@@ -25,7 +25,7 @@ public class LogarNoBanco {
         String senhaParaLogar = entrada.nextLine();
         System.out.println("=======================");
 
-        Integer indexDoUsuario = null;
+        Integer indexDoUsuario;
 
         for(int i = 0; i < bancoCriado.getContasNoBanco().size(); i++){
             if (bancoCriado.getDados(i, TipoDeDado.EMAIL).equals(emailParaLogar) && 

@@ -3,6 +3,7 @@ package controllers;
 import java.util.Scanner;
 import java.util.Locale;
 import entities.Banco;
+import entities.enums.TipoDeDado;
 
 public class Operacoes {
 
@@ -33,7 +34,7 @@ public class Operacoes {
 
     public static void transferir(Scanner entrada, Banco bancoCriado, Integer indexDoUsuario){
 
-        System.out.println(bancoCriado.getContasNoBanco().get(indexDoUsuario).getEnderecoEmail()); 
+        System.out.println(bancoCriado.getDados(indexDoUsuario, TipoDeDado.EMAIL)); 
         System.out.println();
         System.out.println("Estamos na tela de transferir, deu certo");
         
