@@ -2,7 +2,6 @@ package entities.enums;
 
 public enum TipoDeDado {
     
-    CONTA,
     EMAIL,
     IDENTIFICACAO,
     NOME,
@@ -11,6 +10,4 @@ public enum TipoDeDado {
     TIPODACONTA,
     SALDO,
     SENHA;
-
-
 }

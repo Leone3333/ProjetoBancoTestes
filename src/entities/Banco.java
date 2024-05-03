@@ -5,7 +5,7 @@ import java.util.Random;
 
 import services.email.Email;
 import services.email.Mensagem;
-import entities.enums.EnumGet;
+import entities.enums.TipoDeDado;
 
 // Classe que representa um Banco, responsável por gerenciar contas bancárias.
 public class Banco {
@@ -45,7 +45,7 @@ public class Banco {
         return this.numeroDaAgencia;
     }
 
-    public String getDados(int index, EnumGet dado){
+    public String getDados(int index, TipoDeDado dado){
 
         switch (dado) {
 
