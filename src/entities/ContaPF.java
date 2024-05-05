@@ -40,19 +40,19 @@ public class ContaPF extends Conta {
         return dataDeNascimento;
     }
 
-    // Método para definir o nome do titular da conta
+    // Método para atualizar o nome do titular.
     @Override
     public void setNome(Scanner entrada) {
-
         this.nomeDoTitular = ValidarPF.solicitarEValidarNome(entrada);
     }
 
-    // Método para definir a data de nascimento do titular da conta
+    // Método para atualizar a data de nascimento do titular.
     @Override
     public void setData(Scanner entrada) {
-        this.nomeDoTitular = ValidarPF.solicitarEValidarNome(entrada);
-
+        this.dataDeNascimento = ValidarPF.solicitarEValidarDataDeNascimento(entrada);
     }
+
+    
 
     
 }

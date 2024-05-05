@@ -21,25 +21,25 @@ public class ContaPJ extends Conta {
         this.tipoDaConta = "Pessoa Jurídica"; // Define o tipo da conta como Pessoa Jurídica
     }
 
-    // Método para obter a identificação (CNPJ) da conta
+    // Método para obter a identificação (CNPJ) da conta.
     @Override
     public String getIdentificacao() {
         return cnpj;
     }
 
-    // Método para obter o nome da empresa
+    // Método para obter o nome da empresa.
     @Override
     public String getNome() {
         return nomeDaEmpresa;
     }
 
-    // Método para obter a data de criação da empresa
+    // Método para obter a data de criação da empresa.
     @Override
     public String getData() {
         return dataDeCriacao;
     }
 
-    // Método para definir o nome da empresa
+    // Método para atualiazar o nome da empresa.
     @Override
     public void setNome(Scanner entrada) {
     
@@ -47,7 +47,7 @@ public class ContaPJ extends Conta {
 
     }
 
-    // Método para definir a data de criação da empresa
+    // Método para atualizar a data de criação da empresa.
     @Override
     public void setData(Scanner entrada) {
         this.dataDeCriacao = ValidarPJ.solicitarEValidarNome(entrada);

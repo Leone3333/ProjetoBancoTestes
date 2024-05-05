@@ -1,6 +1,7 @@
 package services.email;
 
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
@@ -40,6 +41,13 @@ public class Email {
 
     public void deletarMensagem(int indexMensagem){
         this.mensagensRecebidas.remove(indexMensagem);
+    }
+
+    public void deletarCaixaDeEntrada(){
+        String caminhoDoArquivo = "servidorDeEmail\\" + "caixaDeEntrada-" + getEmail() +".txt";
+        File arquivo = new File(caminhoDoArquivo);  
+        arquivo.delete();
+
     }
 
     public void exibirEmailsRecebidos(){

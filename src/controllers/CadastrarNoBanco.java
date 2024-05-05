@@ -5,9 +5,10 @@ import java.util.InputMismatchException;
 
 import entities.*;
 import services.email.*;
-
+import validation.ValidarEmail;
 import validation.ValidarPF;
 import validation.ValidarPJ;
+import validation.ValidarSenha;
 
 public class CadastrarNoBanco {
     public static void cadastrarNoBanco(Scanner entrada, Banco bancoCriado, Servidor servidorEmail){
@@ -86,9 +87,9 @@ public class CadastrarNoBanco {
 
         String data = ValidarPF.solicitarEValidarDataDeNascimento(entrada);
 
-        Email email = ValidarPF.solicitarEValidarEmail(entrada, bancoCriado, servidorEmail);
+        Email email = ValidarEmail.solicitarEValidarEmail(entrada, bancoCriado, servidorEmail);
         
-        String senha = ValidarPF.solicitarEValidarSenha(entrada);
+        String senha = ValidarSenha.solicitarEValidarSenha(entrada);
 
         // Instância da Conta Pessoa Física.
         Conta contaCriada = new ContaPF(senha, nome, cpf, data, email);
@@ -111,9 +112,9 @@ public class CadastrarNoBanco {
 
         String data = ValidarPJ.solicitarEValidarDataDeCriacao(entrada);
 
-        Email email = ValidarPJ.solicitarEValidarEmail(entrada, bancoCriado, servidorEmail);
+        Email email = ValidarEmail.solicitarEValidarEmail(entrada, bancoCriado, servidorEmail);
         
-        String senha = ValidarPJ.solicitarEValidarSenha(entrada);
+        String senha = ValidarSenha.solicitarEValidarSenha(entrada);
 
         // Instância da Conta Pessoa Física.
         Conta contaCriada = new ContaPJ(senha, nome, cnpj, data, email);

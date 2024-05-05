@@ -4,6 +4,9 @@ import java.util.Random;
 import java.util.Scanner;
 
 import services.email.Email;
+import services.email.Servidor;
+import validation.ValidarEmail;
+import validation.ValidarSenha;
 
 // Classe abstrata Conta que serve como modelo para ContaPF e ContaPJ  
 public abstract class Conta{
@@ -36,8 +39,9 @@ public abstract class Conta{
     }
 
     //Mudar o endereço de e-mail
-    public void setEnderecoEmail(String email){
-        enderecoEmail.setEmail(email);
+    public void setEnderecoEmail(Scanner entrada, Banco bancoCriado, Servidor servidorEmail){
+        enderecoEmail.deletarCaixaDeEntrada();
+        enderecoEmail.setEmail(ValidarEmail.atualizarEValidarEmail(entrada, bancoCriado, servidorEmail));
     }
 
     // Retorna o tipo da conta
@@ -58,6 +62,11 @@ public abstract class Conta{
     //Retorna a senha da conta
     public String getSenha(){
         return this.senhaDaConta;
+    }
+
+    //Atualizar a senha da conta.
+    public void setSenha(Scanner entrada){
+        this.senhaDaConta = ValidarSenha.solicitarEValidarSenha(entrada); 
     }
 
     // Método para gerar um número de conta
