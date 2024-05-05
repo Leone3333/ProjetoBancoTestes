@@ -106,7 +106,7 @@ public class LogarNoBanco {
                     System.out.printf("[%d] Transferir%n", TRANSFERIR);
                     System.out.printf("[%d] Extrato%n", EXTRATO);
                     System.out.printf("[%d] Atualizar Dados%n", ATUALIZARDADOS);
-                    System.out.printf("[%d] Excluir Conta", EXCLUIRCONTA);
+                    System.out.printf("[%d] Excluir Conta%n", EXCLUIRCONTA);
                     System.out.printf("[%d] Sair%n", SAIR);
                     System.out.println("===================================================");
                     
@@ -139,7 +139,7 @@ public class LogarNoBanco {
                         case EXCLUIRCONTA:
 
                             break;
-                            
+
                         case SAIR:
 
                             running = false;
