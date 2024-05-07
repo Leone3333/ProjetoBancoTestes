@@ -25,7 +25,7 @@ public class ValidarPJ{
         }        
 
         //Se o nomeDigitado segue a regra de ter de a-z e A-Z.
-        else if (!(nomeDigitado.matches("^[a-zA-Z\\s]*$"))){
+        else if (!(nomeDigitado.matches("^[a-zA-Z'~çÇáàâãéèêíïóôõöúçüñ\\s]*$"))){
             System.out.println("Digite apenas letras!");
             System.out.println();
         }

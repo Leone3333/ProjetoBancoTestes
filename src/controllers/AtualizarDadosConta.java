@@ -4,6 +4,7 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 import entities.Banco;
+import entities.enums.TipoDeDado;
 import services.email.Servidor;
 
 public class AtualizarDadosConta {
@@ -22,7 +23,6 @@ public class AtualizarDadosConta {
 
             try{
 
-            System.out.print("\033[H\033[2J");
             System.out.println("======== ATUALIZAR DADOS DA CONTA ========");
             System.out.printf("[%d] Atualizar nome%n", ATULIZARNOME);
             System.out.printf("[%d] Atualizar data%n", ATULIZARDATA);
@@ -41,6 +41,7 @@ public class AtualizarDadosConta {
                 case ATULIZARNOME:
                     System.out.println("====== ATUALIZAR NOME ======");
                     bancoCriado.getConta(indexDoUsuario).setNome(entrada);
+                    System.out.println("O nome foi atualizado para " + bancoCriado.getDados(indexDoUsuario, TipoDeDado.NOME));
                     running = false;
                     break;
     
@@ -48,12 +49,14 @@ public class AtualizarDadosConta {
 
                     System.out.println("====== ATUALIZAR DATA ======");
                     bancoCriado.getConta(indexDoUsuario).setData(entrada);    
+                    System.out.println("A data foi atualizada para " + bancoCriado.getDados(indexDoUsuario, TipoDeDado.DATA));
                     running = false;
                     break;
     
                 case ATULIZAREMAIL:
                     System.out.println("====== ATUALIZAR E-MAIL ======");
                     bancoCriado.getConta(indexDoUsuario).setEnderecoEmail(entrada, bancoCriado, servidorEmail);
+                    System.out.println("O e-mail foi atualizado para " + bancoCriado.getDados(indexDoUsuario, TipoDeDado.EMAIL));
                     running = false;
                     break;
     

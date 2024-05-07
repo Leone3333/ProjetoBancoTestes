@@ -26,7 +26,7 @@ public class ValidarPF{
             }        
 
             //Se o nomeDigitado segue a regra de ter de a-z e A-Z.
-            else if (!(nomeDigitado.matches("^[a-zA-Z\\s]*$"))){
+            else if (nomeDigitado.matches("[0-9][@]")){
                 System.out.println("Digite apenas letras!");
                 System.out.println();
             }
