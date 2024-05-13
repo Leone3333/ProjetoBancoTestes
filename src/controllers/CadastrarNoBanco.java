@@ -4,24 +4,24 @@ import java.util.Scanner;
 import java.util.InputMismatchException;
 
 import entities.*;
-import services.email.*;
-import validation.ValidarEmail;
-import validation.ValidarPF;
-import validation.ValidarPJ;
-import validation.ValidarSenha;
+import services.email.*;               
+import validation.*;
 
 public class CadastrarNoBanco {
     public static void cadastrarNoBanco(Scanner entrada, Banco bancoCriado, Servidor servidorEmail){
 
+    // Definição das opções do menu
     final int CONTAPF = 1;
     final int CONTAPJ = 2;
     final int VOLTAR = 3;
 
     boolean running = true;
 
+    // Loop principal para o menu
     do{
        
         try{ 
+        // Menu de opções
         System.out.println("=========== CADASTRAR CONTA =========");
         System.out.printf("[%d] Conta Pessoa Física %n", CONTAPF);
         System.out.printf("[%d] Conta Pessoa Jurídica %n", CONTAPJ);
@@ -29,37 +29,39 @@ public class CadastrarNoBanco {
         System.out.println("=====================================");
         System.out.println();
 
-
+        // Solicitação da escolha do usuário
         System.out.println("Digite uma opção: ");
         int opcao = entrada.nextInt();
 
-        
+        // Switch para lidar com as opções do usuário
         switch (opcao) {
 
             case CONTAPF:
+                // Chamada para cadastrar uma conta de Pessoa Física
                 cadastrarPF(entrada, bancoCriado, servidorEmail);
                 running = false;
                 break;
 
             case CONTAPJ:
-                
+                // Chamada para cadastrar uma conta de Pessoa Jurídica
                 cadastrarPJ(entrada, bancoCriado, servidorEmail);
                 running = false;
                 break;
 
             case VOLTAR:
+                // Opção para voltar ao menu anterior
                 running = false;
-                System.out.print("\033[H\033[2J");
+                System.out.print("\033[H\033[2J"); // Limpa a tela do console
                 break;
 
             default:
-                //Exibir mensagem se a opção for válida.
+                // Exibir mensagem de erro se a opção for inválida
                 System.out.print("\033[H\033[2J");
                 System.out.println("Digite alguma das opções abaixo: ");
                 break;
         }
             } catch(InputMismatchException e){
-
+                // Lidar com exceção de entrada inválida
                 System.out.print("\033[H\033[2J");
                 System.out.println("============ ATENÇÃO! ===========");
                 System.out.println("      Digite apenas números!     ");
@@ -81,22 +83,19 @@ public class CadastrarNoBanco {
 
         System.out.println("========= CADASTRAR CONTA PESSOA FÍSICA =========");
 
+        // Solicitar e validar os dados da Pessoa Física
         String nome = ValidarPF.solicitarEValidarNome(entrada);
-
         String cpf = ValidarPF.solicitarEValidarCPF(entrada, bancoCriado);
-
         String data = ValidarPF.solicitarEValidarDataDeNascimento(entrada);
-
         Email email = ValidarEmail.solicitarEValidarEmail(entrada, bancoCriado, servidorEmail);
-        
         String senha = ValidarSenha.solicitarEValidarSenha(entrada);
 
-        // Instância da Conta Pessoa Física.
+        // Instanciar e cadastrar a conta de Pessoa Física
         Conta contaCriada = new ContaPF(senha, nome, cpf, data, email);
         bancoCriado.cadastrarConta(contaCriada);
 
-       //Exibir dados da conta e enviar os dados para o e-mail
-       exibirDados(entrada, bancoCriado, contaCriada, email, servidorEmail);       
+        // Exibir dados da conta e enviar para o e-mail
+        exibirDados(entrada, bancoCriado, contaCriada, email, servidorEmail);       
     }
 
     //Função para criar uma conta Pessoa Jurídica.
@@ -106,21 +105,18 @@ public class CadastrarNoBanco {
         System.out.print("\033[H\033[2J");
         System.out.println("========= CADASTRAR CONTA PESSOA JURÍDICA =========");
 
+        // Solicitar e validar os dados da Pessoa Jurídica
         String nome = ValidarPJ.solicitarEValidarNome(entrada);
-
         String cnpj = ValidarPJ.solicitarEValidarCNPJ(entrada, bancoCriado);
-
         String data = ValidarPJ.solicitarEValidarDataDeCriacao(entrada);
-
         Email email = ValidarEmail.solicitarEValidarEmail(entrada, bancoCriado, servidorEmail);
-        
         String senha = ValidarSenha.solicitarEValidarSenha(entrada);
 
-        // Instância da Conta Pessoa Física.
+        // Instanciar e cadastrar a conta de Pessoa Jurídica
         Conta contaCriada = new ContaPJ(senha, nome, cnpj, data, email);
         bancoCriado.cadastrarConta(contaCriada);
 
-        //Exibir dados da conta e enviar os dados para o e-mail
+        // Exibir dados da conta e enviar para o e-mail
         exibirDados(entrada, bancoCriado, contaCriada, email, servidorEmail);
     }
     
@@ -128,7 +124,7 @@ public class CadastrarNoBanco {
     public static void exibirDados(Scanner entrada, Banco bancoCriado, Conta contaCriada, Email emailValido, Servidor servidorEmail){
 
     //Enviar um código de verificação
-    servidorEmail.enviarMensagem(bancoCriado.enviarDados(emailValido.getEmail()));
+    servidorEmail.armazenarMensagem(bancoCriado.enviarDados(emailValido.getEmail()));
     emailValido.exibirEmailsRecebidos();
 
     System.out.print("\033[H\033[2J");
@@ -142,3 +138,4 @@ public class CadastrarNoBanco {
     System.out.print("\033[H\033[2J");
     }
 }
+

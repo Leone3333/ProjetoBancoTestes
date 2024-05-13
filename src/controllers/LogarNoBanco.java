@@ -2,15 +2,15 @@ package controllers;
 
 import java.util.Scanner;
 
-import services.email.*;
-import entities.*;
+import entities.Banco;
+import services.email.Servidor;
 import entities.enums.TipoDeDado;
-
 
 public class LogarNoBanco {
 
     public static void logarNoBanco(Scanner entrada, Servidor servidorEmail, Banco bancoCriado){
 
+        // Constantes para as opções do menu após o login
         final int DEPOSITAR = 1;
         final int SACAR = 2;
         final int TRANSFERIR = 3;
@@ -19,7 +19,7 @@ public class LogarNoBanco {
         final int EXCLUIRCONTA = 6;
         final int SAIR = 7;
 
-        //Flags do e-mail e senha.
+        // Flags para verificar se o e-mail e a senha são válidos
         boolean emailValido = false;
         boolean senhaValida = false;
 
@@ -29,134 +29,122 @@ public class LogarNoBanco {
         entrada.nextLine();
         System.out.println("=============== FAZER LOGIN  ===============");
 
-        //Enquanto o e-mail não for válido, ficará em um loop.
-        do{
-        System.out.println("E-mail: ");
-        emailParaLogar = entrada.nextLine();
+        // Validação do e-mail
+        do {
+            System.out.println("E-mail: ");
+            emailParaLogar = entrada.nextLine();
 
-        if(emailParaLogar.isEmpty()){
-            System.out.println("O campo não pode estar vazio!");
+            if (emailParaLogar.isEmpty()) {
+                System.out.println("O campo não pode estar vazio!");
+            } else if (!(emailParaLogar.matches("^[a-zA-Z0-9._+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$"))) {
+                System.out.println("Digite um e-mail válido! Ex: nome@seudominio.com.br");
+                System.out.println();
+            } else {
+                emailValido = true;
+            }
+        } while (!emailValido);
 
-        } else if(!(emailParaLogar.matches("^[a-zA-Z0-9._+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$"))){
-            System.out.println("Digite um e-mail válido! Ex: nome@seudominio.com.br");
-            System.out.println();
-
-        } else{
-            emailValido = true;
-        }
-        
-        } while(!emailValido);
-
-
-
-
-
-
-        //Enquanto a senha não for válida, ficará em um loop.
-        do{
+        // Validação da senha
+        do {
             System.out.println("Senha: ");
             senhaParaLogar = entrada.nextLine();
 
-            if(senhaParaLogar.isEmpty()){
+            if (senhaParaLogar.isEmpty()) {
                 System.out.println("O campo não pode estar vazio!");
-
-            }  else if (!senhaParaLogar.matches("\\d+")) {
+            } else if (!senhaParaLogar.matches("\\d+")) {
                 System.out.println("A senha deve conter somente números!");
                 System.out.println();
-                
-
             } else if (senhaParaLogar.length() != 8) {
                 System.out.println("A senha deve conter 8 dígitos!");
                 System.out.println();
-                
-            } else{
+            } else {
                 senhaValida = true;
                 System.out.println("============================================");
             }
+        } while (!senhaValida);
 
-        } while(!senhaValida);
+        // Verificação do usuário no banco de dados
+        Integer indexDoUsuario = null;
+        boolean usuarioEncontrado = false;
 
-
-
-
-        
-        Integer indexDoUsuario;
-        Boolean usuarioEncontrado = false;
-
-        //Pecorrer as contas no banco e depois verificar se o e-mail e a senha batem com o digitado./
-        for(int i = 0; i < bancoCriado.getContasNoBanco().size(); i++){
-            if (bancoCriado.getDados(i, TipoDeDado.EMAIL).equals(emailParaLogar) && 
-                bancoCriado.getDados(i, TipoDeDado.SENHA).equals(senhaParaLogar)){
+        for (int i = 0; i < bancoCriado.getContasNoBanco().size(); i++) {
+            if (bancoCriado.getDados(i, TipoDeDado.EMAIL).equals(emailParaLogar) &&
+                bancoCriado.getDados(i, TipoDeDado.SENHA).equals(senhaParaLogar)) {
 
                 usuarioEncontrado = true;
-
-                    System.out.print("\033[H\033[2J");
-                    System.out.println("Seja Bem-Vindo(a) " + bancoCriado.getDados(i, TipoDeDado.NOME));
-
-                
-                    
-                    // Código para rodar em conta Pessoa física após login
-                    indexDoUsuario = i;
-                    boolean running = true;
-
-                    do {
-                    System.out.println("=========== Selecione a opção desejada: ===========");
-                    System.out.printf("[%d] Depositar%n", DEPOSITAR);
-                    System.out.printf("[%d] Sacar%n", SACAR);
-                    System.out.printf("[%d] Transferir%n", TRANSFERIR);
-                    System.out.printf("[%d] Extrato%n", EXTRATO);
-                    System.out.printf("[%d] Atualizar Dados%n", ATUALIZARDADOS);
-                    System.out.printf("[%d] Excluir Conta%n", EXCLUIRCONTA);
-                    System.out.printf("[%d] Sair%n", SAIR);
-                    System.out.println("===================================================");
-                    
-                    int opcaoDigitada = entrada.nextInt();
-
-                    switch (opcaoDigitada) {
-                        case DEPOSITAR:
-                            // depositar
-                            Operacoes.depositar(entrada, bancoCriado, indexDoUsuario);
-                            break;
-
-                        case SACAR:
-                            // sacar
-                            break;
-
-                        case TRANSFERIR:
-                            // transferir
-                            break;
-                        
-                        case EXTRATO:
-
-                            break;
-
-
-                        case ATUALIZARDADOS:
-                            AtualizarDadosConta.atualizarDadosConta(entrada, bancoCriado, indexDoUsuario, servidorEmail);
-                            break;
-
-
-                        case EXCLUIRCONTA:
-
-                            break;
-
-                        case SAIR:
-
-                            running = false;
-                            break;
-
-                        default:
-                            System.out.println("Digite uma opção válida!");
-                            break;
-                    }
-
-                }   while(running);
+                indexDoUsuario = i;
+                break;
             }
         }
 
-        if(!usuarioEncontrado){
+        if (usuarioEncontrado) {
+            System.out.print("\033[H\033[2J");
+            System.out.println("Seja Bem-Vindo(a) " + bancoCriado.getDados(indexDoUsuario, TipoDeDado.NOME));
+
+            // Menu de operações após o login
+            boolean running = true;
+
+            do {
+                System.out.println("=========== Selecione a opção desejada: ===========");
+                System.out.printf("[%d] Depositar%n", DEPOSITAR);
+                System.out.printf("[%d] Sacar%n", SACAR);
+                System.out.printf("[%d] Transferir%n", TRANSFERIR);
+                System.out.printf("[%d] Extrato%n", EXTRATO);
+                System.out.printf("[%d] Atualizar Dados%n", ATUALIZARDADOS);
+                System.out.printf("[%d] Excluir Conta%n", EXCLUIRCONTA);
+                System.out.printf("[%d] Sair%n", SAIR);
+                System.out.println("===================================================");
+
+                System.out.println();
+                System.out.println("Digite uma opção: ");
+                int opcaoDigitada = entrada.nextInt();
+
+                switch (opcaoDigitada) {
+                    case DEPOSITAR:
+                        // Chama o método para depositar
+                        Operacoes.depositar(entrada, bancoCriado, indexDoUsuario);
+                        break;
+
+                    case SACAR:
+                        // Chama o método para sacar
+                        Operacoes.sacar(entrada, bancoCriado, indexDoUsuario);
+                        break;
+
+                    case TRANSFERIR:
+                        // Chama o método para transferir
+                        // Implemente a funcionalidade de transferência aqui
+                        break;
+                    
+                    case EXTRATO:
+                        // Chama o método para exibir o extrato
+                        // Implemente a funcionalidade do extrato aqui
+                        break;
+
+                    case ATUALIZARDADOS:
+                        // Chama o método para atualizar dados da conta
+                        AtualizarDadosConta.atualizarDadosConta(entrada, bancoCriado, indexDoUsuario, servidorEmail);
+                        break;
+
+                    case EXCLUIRCONTA:
+                        // Chama o método para excluir conta
+                        DeletarConta.deletarConta(entrada, bancoCriado, indexDoUsuario, servidorEmail);
+                        running = false;
+                        break;
+
+                    case SAIR:
+                        // Sai do programa
+                        running = false;
+                        break;
+
+                    default:
+                        System.out.println("Digite uma opção válida!");
+                        break;
+                }
+
+            } while (running);
+        } else {
+            // Exibe mensagem se o usuário não for encontrado
             System.out.println("Dados inválidos! Verifique o e-mail ou a senha!");
         }
-
     }
 }

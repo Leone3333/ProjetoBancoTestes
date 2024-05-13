@@ -10,14 +10,13 @@ import entities.enums.TipoDeDado;
 // Classe que representa um Banco, responsável por gerenciar contas bancárias.
 public class Banco {
     
+    // Atributos
     private String nomeDoBanco; // Nome do banco
     private Email emailDoBanco; // Endereço de e-mail do banco
     private String numeroDaAgencia; // Número da agência bancária
     private Integer codigoEnviado; // Código enviado para verificação
 
     private ArrayList<Conta> contasNoBanco; // Lista de contas no banco
-
-
 
     // Método construtor para criar o banco
     public Banco(String nomeDoBanco, String emailDoBanco) {
@@ -37,6 +36,9 @@ public class Banco {
         return this.contasNoBanco;
     }
 
+    //public Integer getDestinatario(){}
+
+
     // Método para obter o endereço de e-mail do banco
     public String getEmailDoBanco() {
         return this.emailDoBanco.getEmail();
@@ -47,13 +49,18 @@ public class Banco {
         return this.numeroDaAgencia;
     }
 
+
+
+    // Método para obter dados específicos de uma conta com base no índice e no tipo de dado
     public String getDados(int index, TipoDeDado dado){
 
         switch (dado) {
-
+            // Retorna o atributo correspondente ao tipo de dado solicitado
             case SENHA:
                 return contasNoBanco.get(index).getSenha();
             case EMAIL:
+                return contasNoBanco.get(index).getEnderecoEmail();
+            case ENDERECODEEMAIL:
                 return contasNoBanco.get(index).getEnderecoEmail();
             case NOME:
                 return contasNoBanco.get(index).getNome();
@@ -72,7 +79,8 @@ public class Banco {
         }
     }
 
-    //Inicio dos métodos para pegar os dados de acordo com o index
+    // Métodos para manipular a lista de contas no banco
+
     // Método para obter uma conta pelo índice na lista
     public Conta getConta(int index){
         return contasNoBanco.get(index);
@@ -82,6 +90,13 @@ public class Banco {
     public void cadastrarConta(Conta conta){
         this.contasNoBanco.add(conta);
     }
+
+    // Método para remover uma conta da lista de contas do banco
+    public void removerConta(int indexDoUsuario){
+        contasNoBanco.remove(indexDoUsuario);
+    }
+
+    // Outros métodos
 
     // Método para gerar um número da agência
     public String gerarNumeroDaAgencia(){
@@ -99,7 +114,7 @@ public class Banco {
             if(conta.getNumeroDaConta().equals(informacaoBusca) || 
             conta.getEnderecoEmail().equals(informacaoBusca)){
 
-                // Verificar se a conta é uma instância de ContaPF
+                // Verificar se a conta é uma instância de ContaPF ou ContaPJ e formatar os dados
                 if (conta instanceof ContaPF){
                     return "Nome do Titular: " + conta.getNome() + "\n"
                     + "Data de nascimento: " + conta.getData() + "\n"
@@ -107,10 +122,7 @@ public class Banco {
                     + "Tipo da Conta: " + conta.getTipoDaConta() + "\n"
                     + "Número da conta: " + conta.getNumeroDaConta() + "\n"
                     + "Endereço de e-mail " + conta.getEnderecoEmail();
-                }
-
-                else{
-
+                } else {
                     return "Nome da Empresa: " + conta.getNome() + "\n"
                     + "Data de criação: " + conta.getData() + "\n"
                     + "CNPJ: " + conta.getIdentificacao() + "\n"
@@ -122,21 +134,6 @@ public class Banco {
         }
 
         return "Não foi possível exibir os dados da conta";
-
-    }
-
-    // Método para verificar se uma conta existe com base em um dado (CPF/CNPJ ou e-mail)
-    public Integer contaExiste(String dado){
-        for(int index = 0; index < contasNoBanco.size(); index++){
-            if(contasNoBanco.get(index).getIdentificacao().equals(dado)){
-                return index;
-            }
-
-            if(contasNoBanco.get(index).getEnderecoEmail().equals(dado)){
-                return index;
-            }
-        }
-        return null;
     }
 
     // Método para enviar um código de verificação para um destinatário por e-mail
@@ -155,14 +152,16 @@ public class Banco {
     public boolean verificarCodigo(Integer codigoDigitado){
         if(codigoDigitado.equals(codigoEnviado)){
             return true;
-        } else
-        return false; 
+        } else {
+            return false;
+        }
     }
 
     // Método para enviar os dados da conta criada para um destinatário por e-mail
     public Mensagem enviarDados(String emailDoDestinatario){
-        String contaCriada = "Boas notícias! Sua conta foi criada com sucesso." + "\n" 
-        + "Estamos felizes por ter vc aqui!" + "\n" + "\n"
+        String contaCriada = 
+          "Boas notícias! Sua conta foi criada com sucesso." + "\n" 
+        + "Estamos felizes por ter você aqui!" + "\n" + "\n"
         + "Agência: " + getNumeroDaAgencia() + "\n";
 
         String dados = contaCriada + exibirDados(emailDoDestinatario);

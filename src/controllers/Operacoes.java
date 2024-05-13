@@ -4,6 +4,7 @@ import java.util.Scanner;
 import java.util.Locale;
 import entities.Banco;
 import entities.enums.TipoDeDado;
+import entities.Conta;
 
 public class Operacoes {
 
@@ -28,17 +29,37 @@ public class Operacoes {
 
     public static void sacar(Scanner entrada, Banco bancoCriado, Integer indexDoUsuario){
 
-        System.out.println(bancoCriado.getDados(indexDoUsuario, TipoDeDado.EMAIL)); 
-        System.out.println();
-        System.out.println("Estamos na tela de sacar, deu certo");
+        Locale.setDefault(Locale.US);
+
+        System.out.print("\033[H\033[2J");
+        System.out.println("Digite o valor que deseja sacar: ");
+        Double valorParaSaque = entrada.nextDouble();
+
+        System.out.print("\033[H\033[2J");
+        if (bancoCriado.getConta(indexDoUsuario).sacar(valorParaSaque)){
+        System.out.println("Saque no valor de R$" + valorParaSaque + " Realizado com Sucesso!");
+        }
+        System.out.println("Seu saldo atual é: R$" + bancoCriado.getDados(indexDoUsuario, TipoDeDado.SALDO));
+        
     }
 
     public static void transferir(Scanner entrada, Banco bancoCriado, Integer indexDoUsuario){
 
-        System.out.println(bancoCriado.getDados(indexDoUsuario, TipoDeDado.EMAIL)); 
+        Locale.setDefault(Locale.US);
+
+        System.out.print("\033[H\033[2J");
+        System.out.println("Digite o valor que deseja transferir: ");
+        Double valorParaTransferencia = entrada.nextDouble();
         System.out.println();
-        System.out.println("Estamos na tela de transferir, deu certo");
+        System.out.println("Digite a conta que irá receber a transferência: ");
+        String numeroDaContaRecebedora = entrada.nextLine();
+
+        bancoCriado.getConta(indexDoUsuario).sacar(valorParaTransferencia);
+
+
+        //bancoCriado.getConta(indexDoUsuario).depositar(valorParaTransferencia);
         
+
     }
 
     public static void extrato(Scanner entrada, Banco bancoCriado, Integer indexDoUsuario){

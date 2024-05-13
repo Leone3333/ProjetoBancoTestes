@@ -57,7 +57,7 @@ public class ValidarPJ{
                 System.out.println("O CNPJ deve ser válido! No formato 00.000.000/0001-00"); 
                 System.out.println();
 
-            }  else if(ValidarDadosExistentes.validar(bancoCriado, cnpjDigitado, entrada)){
+            }  else if(ValidarDadosExistentes.validar(bancoCriado, cnpjDigitado)){
                 System.out.println("O CNPJ " + cnpjDigitado + " já está cadastrado." );
                 System.out.println();
 

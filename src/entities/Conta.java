@@ -80,7 +80,23 @@ public abstract class Conta{
 
     // Método para depositar dinheiro na conta
     public void depositar(double valor){
+        if(valor >= 1){
         this.saldoDaConta += valor;
+        } else {
+            System.out.println("o Valor mínimo para depósito é de R$ 1,00!");
+        }
     }
     
+    public boolean sacar(double valor){
+        boolean sacou = false;
+        if(valor <= saldoDaConta && valor > 0){
+            
+            this.saldoDaConta -= valor;
+            return sacou = true;
+
+        } else{
+            System.out.println("Impossível sacar este valor!");
+        }
+        return sacou;
+    }
 }

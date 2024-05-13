@@ -20,9 +20,9 @@ public class Servidor {
     }
 
     //Enviar mensagem para um destinátario
-    public void enviarMensagem(Mensagem mensagem){
+    public void armazenarMensagem(Mensagem mensagem){
 
-        //Pegar o destinatario da mensagem
+        //Guardar o destinatario da mensagem
         String destinatario = mensagem.getDestinatario();
 
         //Pecorrer a lista

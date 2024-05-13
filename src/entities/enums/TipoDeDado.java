@@ -9,6 +9,7 @@ public enum TipoDeDado {
     NUMERODACONTA, //Numero da empresa ou do titular.
     TIPODACONTA, //Tipo da conta (pessoa física ou pessoa jurídica).
     SALDO, //Saldo da conta.
+    ENDERECODEEMAIL,// Endereço de email da empresa ou titular.
     SENHA; // Senha da conta.
 
 }

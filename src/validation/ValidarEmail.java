@@ -11,7 +11,7 @@ public class ValidarEmail {
      //Solicitar e Validar o E-mail 
      public static Email solicitarEValidarEmail(Scanner entrada, Banco bancoCriado, Servidor servidorEmail){
 
-        boolean emailValido = false;
+        boolean emailValido = false; 
         Email emailVerificado;
         String emailDigitado;
 
@@ -29,13 +29,16 @@ public class ValidarEmail {
                 System.out.println();
             }
 
-             else if(ValidarDadosExistentes.validar(bancoCriado, emailDigitado, entrada)){
+             else if(ValidarDadosExistentes.validar(bancoCriado, emailDigitado)){
                 System.out.println("O E-mail " + emailDigitado + " já está cadastrado." );   
                 System.out.println();
             }
 
             else {
-                emailVerificado = ValidarEmail.verificacaoDeEmail(entrada, servidorEmail, bancoCriado, emailDigitado);
+
+                //Instanciando o E-mail
+                Email email = servidorEmail.cadastrarEmail(emailDigitado);
+                emailVerificado = ValidarEmail.verificacaoDeEmail(entrada, servidorEmail, bancoCriado, email);
                 if (emailVerificado != null) {
                     return emailVerificado;
                 }
@@ -47,14 +50,13 @@ public class ValidarEmail {
     }
 
 
-   public static Email verificacaoDeEmail(Scanner entrada, Servidor servidorEmail, Banco bancoCriado, String emailDigitado){
+   public static Email verificacaoDeEmail(Scanner entrada, Servidor servidorEmail, Banco bancoCriado, Email emailDoUsuario){
     
 
-        // Instância do Email.
-        Email emailValido = servidorEmail.cadastrarEmail(emailDigitado);
+        Email emailValido = emailDoUsuario;
 
         //Enviar um código de verificação
-        servidorEmail.enviarMensagem(bancoCriado.enviarCodigo(emailDigitado));
+        servidorEmail.armazenarMensagem(bancoCriado.enviarCodigo(emailDoUsuario.getEmail()));
         emailValido.exibirEmailsRecebidos();
     
         System.out.println();
@@ -107,6 +109,7 @@ public class ValidarEmail {
         Email emailVerificado;
         String emailDigitado;
 
+
         do{ 
             System.out.println("E-mail: ");
             emailDigitado = entrada.nextLine().trim();
@@ -122,13 +125,14 @@ public class ValidarEmail {
                 System.out.println();
             }
 
-            else if(ValidarDadosExistentes.validar(bancoCriado, emailDigitado, entrada)){
+            else if(ValidarDadosExistentes.validar(bancoCriado, emailDigitado)){
                 System.out.println("O E-mail " + emailDigitado + " já está cadastrado." );   
                 System.out.println();
             }
 
             else {
-                emailVerificado = ValidarEmail.verificacaoDeEmail(entrada, servidorEmail, bancoCriado, emailDigitado);
+                Email email = servidorEmail.cadastrarEmail(emailDigitado);
+                emailVerificado = ValidarEmail.verificacaoDeEmail(entrada, servidorEmail, bancoCriado, email);
                 if (emailVerificado != null) {
                      return emailDigitado;
                 }
