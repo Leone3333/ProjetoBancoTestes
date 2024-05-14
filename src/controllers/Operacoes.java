@@ -68,12 +68,6 @@ public class Operacoes {
             System.out.println("Impossível realizar a transferência!");
         }
 
-        
-        
-
-        
-
-
     }
 
     public static void extrato(Scanner entrada, Banco bancoCriado, Integer indexDoUsuario){
