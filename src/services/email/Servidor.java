@@ -1,5 +1,6 @@
 package services.email;
 
+import java.io.File;
 import java.util.ArrayList;
 
 public class Servidor {
@@ -41,4 +42,7 @@ public class Servidor {
     public ArrayList<Email> getEmailsCadastrados() {
         return this.emailsCadastrados;
     }
+
+    
 }
+

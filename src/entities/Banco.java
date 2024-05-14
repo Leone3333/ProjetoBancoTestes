@@ -36,7 +36,16 @@ public class Banco {
         return this.contasNoBanco;
     }
 
-    //public Integer getDestinatario(){}
+    // Método para obter os dados do destinatário
+    public Integer getIndexDestinatario(String contaDestino){
+
+        for(int i = 0; i < contasNoBanco.size(); i++){
+            if(contasNoBanco.get(i).getNumeroDaConta().equals(contaDestino)){
+                return i;
+            }
+        }
+        return null;
+    }
 
 
     // Método para obter o endereço de e-mail do banco
@@ -95,7 +104,6 @@ public class Banco {
     public void removerConta(int indexDoUsuario){
         contasNoBanco.remove(indexDoUsuario);
     }
-
     // Outros métodos
 
     // Método para gerar um número da agência

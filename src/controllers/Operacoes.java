@@ -4,7 +4,6 @@ import java.util.Scanner;
 import java.util.Locale;
 import entities.Banco;
 import entities.enums.TipoDeDado;
-import entities.Conta;
 
 public class Operacoes {
 
@@ -51,14 +50,29 @@ public class Operacoes {
         System.out.println("Digite o valor que deseja transferir: ");
         Double valorParaTransferencia = entrada.nextDouble();
         System.out.println();
-        System.out.println("Digite a conta que irá receber a transferência: ");
+        System.out.println("Digite o número da conta que irá receber a transferência: ");
+
+        entrada.nextLine();
         String numeroDaContaRecebedora = entrada.nextLine();
 
-        bancoCriado.getConta(indexDoUsuario).sacar(valorParaTransferencia);
+        // Pegando o index da conta que irá receber e guardando em indexDestino
+        Integer indexDestino = bancoCriado.getIndexDestinatario(numeroDaContaRecebedora);
 
+        // Pegando o nome de quem irá receber o dinheiro
+        String nomeDoRecebedor = bancoCriado.getDados(indexDestino, TipoDeDado.NOME);
 
-        //bancoCriado.getConta(indexDoUsuario).depositar(valorParaTransferencia);
+        // Sacando da conta que está enviando o dinheiro e depositando na conta recebedora
+        if (bancoCriado.getConta(indexDoUsuario).sacar(valorParaTransferencia) && bancoCriado.getConta(indexDestino).depositar(valorParaTransferencia)) {
+            System.out.println("Transferência no valor de R$ " + valorParaTransferencia + " Realizada com Sucesso para " + nomeDoRecebedor);
+        }else{
+            System.out.println("Impossível realizar a transferência!");
+        }
+
         
+        
+
+        
+
 
     }
 

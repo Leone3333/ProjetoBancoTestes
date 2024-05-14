@@ -111,8 +111,7 @@ public class LogarNoBanco {
                         break;
 
                     case TRANSFERIR:
-                        // Chama o método para transferir
-                        // Implemente a funcionalidade de transferência aqui
+                        Operacoes.transferir(entrada, bancoCriado, indexDoUsuario);
                         break;
                     
                     case EXTRATO:
