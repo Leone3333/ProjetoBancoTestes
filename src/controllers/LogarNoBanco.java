@@ -67,10 +67,18 @@ public class LogarNoBanco {
         Integer indexDoUsuario = null;
         boolean usuarioEncontrado = false;
 
-        for (int i = 0; i < bancoCriado.getContasNoBanco().size(); i++) {
-            if (bancoCriado.getDados(i, TipoDeDado.EMAIL).equals(emailParaLogar) &&
-                bancoCriado.getDados(i, TipoDeDado.SENHA).equals(senhaParaLogar)) {
 
+        for (int i = 0; i < bancoCriado.getContasNoBanco().size(); i++) {
+
+            if (bancoCriado.getEnderecoADM().equals(emailParaLogar) && bancoCriado.getSenhaADM().equals(senhaParaLogar))
+            {
+                AdministradorBanco.administradorBanco(entrada, bancoCriado);
+                break;
+            }
+
+
+            if (bancoCriado.getDados(i, TipoDeDado.EMAIL).equals(emailParaLogar) && bancoCriado.getDados(i, TipoDeDado.SENHA).equals(senhaParaLogar)) 
+            {
                 usuarioEncontrado = true;
                 indexDoUsuario = i;
                 break;

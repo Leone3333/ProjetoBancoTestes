@@ -15,20 +15,34 @@ public class Banco {
     private Email emailDoBanco; // Endereço de e-mail do banco
     private String numeroDaAgencia; // Número da agência bancária
     private Integer codigoEnviado; // Código enviado para verificação
+    
+    private Email emailDoAdm; // Endereço de e-mail do admin;
+    private String senhaDoAdm; // Senha do admin;
 
     private ArrayList<Conta> contasNoBanco; // Lista de contas no banco
 
     // Método construtor para criar o banco
-    public Banco(String nomeDoBanco, String emailDoBanco) {
+    public Banco(String nomeDoBanco, String emailDoBanco, String emailDoAdm, String senhaDoAdm) {
         this.nomeDoBanco = nomeDoBanco; // Inicializa o nome do banco
         this.numeroDaAgencia = gerarNumeroDaAgencia(); // Gera o número da agência
         this.emailDoBanco = new Email(emailDoBanco); // Inicializa o endereço de e-mail do banco
+        this.emailDoAdm = new Email(emailDoAdm);
+        this.senhaDoAdm = senhaDoAdm;
         this.contasNoBanco = new ArrayList<>(); // Inicializa a lista de contas
     }
 
     // Método para obter o nome do banco
     public String getNomeDoBanco() {
         return this.nomeDoBanco;
+    }
+
+    // Método para obter endereço de e-mail do ADM do banco.
+    public String getEnderecoADM(){
+        return this.emailDoAdm.getEmail();
+    }
+
+    public String getSenhaADM(){
+        return this.senhaDoAdm;
     }
 
     // Método para obter a lista de contas no banco

@@ -22,7 +22,7 @@ public class Principal {
         Servidor servidorEmail = new Servidor(); 
 
         // Criando o banco com o nome e o e-mail do banco para envio de mensagens de verificação e transações. 
-        Banco bancoCriado = new Banco("Banco do Brasil","suporte@bb.com.br");
+        Banco bancoCriado = new Banco("Banco do Brasil","suporte@bb.com.br", "admin@bb.com.br", "12345678");
        
         // Cadastrando o email do Banco no servidor. 
         servidorEmail.cadastrarEmail(bancoCriado.getEmailDoBanco());
@@ -70,6 +70,7 @@ public class Principal {
                     case LOGIN:
                         // Chamando o método para realizar o login no banco.
                         LogarNoBanco.logarNoBanco(entrada, servidorEmail, bancoCriado);
+                        System.out.println("voltou para classe principal");
                         break;
                     
                     case CADASTRAR:

@@ -51,7 +51,6 @@ public class Email {
     }
 
     
-
     public void exibirEmailsRecebidos(){
 
         //Deve-se verificar se está correto
