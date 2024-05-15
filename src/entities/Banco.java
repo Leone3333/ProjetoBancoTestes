@@ -81,8 +81,6 @@ public class Banco {
             // Retorna o atributo correspondente ao tipo de dado solicitado
             case SENHA:
                 return contasNoBanco.get(index).getSenha();
-            case EMAIL:
-                return contasNoBanco.get(index).getEnderecoEmail();
             case ENDERECODEEMAIL:
                 return contasNoBanco.get(index).getEnderecoEmail();
             case NOME:

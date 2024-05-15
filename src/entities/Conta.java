@@ -38,6 +38,10 @@ public abstract class Conta{
         return this.enderecoEmail.getEmail();
     }
 
+    public Email getEmail(){
+        return this.enderecoEmail;
+    }
+
     //Mudar o endereço de e-mail
     public void setEnderecoEmail(Scanner entrada, Banco bancoCriado, Servidor servidorEmail){
         enderecoEmail.deletarCaixaDeEntrada();

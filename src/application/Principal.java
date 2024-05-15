@@ -30,11 +30,21 @@ public class Principal {
         // Instâncias de algumas contas de exemplo
         // Contas Pessoa Física
         Conta conta1 = new ContaPF("12345678", "Pedro Silva dos Santos", "000.111.222-33", "14/01/2005", new Email("pedro@gmail.com"));
-        Conta conta2 = new ContaPF("87654321", "Mariá Santana da Cruz", "111.222.333-44", "16/11/2003", new Email("mariasantana@outlook.com"));
+        conta1.depositar(1500D);
+
+        Conta conta2 = new ContaPF("87654321", "Lucas Barbosa Rodrigues", "111.222.333-44", "16/11/2003", new Email("mariasantana@outlook.com"));
+        conta2.depositar(12.87D);
+
         Conta conta3 = new ContaPF("07052003", "Mariá Santana da Cruz", "222.333.444-55", "07/05/2003", new Email("mateusoliveira@gmail.com"));
+        conta3.depositar(453.21D);
+
         // Contas Pessoa Jurídica
         Conta conta4 = new ContaPJ("11223344", "Aliexpress", "13.236.697/0001-46", "12/04/2002", new Email("aliexpress@bol.com.br"));
+        conta4.depositar(1923022.12D);
+        
         Conta conta5 = new ContaPJ("00001111", "Shopee", "54.289.446/0001-07", "12/04/2002", new Email("shopee@outlook.com"));
+        conta5.depositar(2392545.93D);
+
         
         // Cadastrando as contas no banco
         bancoCriado.cadastrarConta(conta1);
@@ -51,11 +61,10 @@ public class Principal {
             try {
                 // Menu do programa
                 System.out.println();
-                System.out.println("=========== Banco do Brasil ===========");
+                System.out.printf("=========== %s =========== %n", bancoCriado.getNomeDoBanco());
                 System.out.printf("[%d] Login%n", LOGIN);  
                 System.out.printf("[%d] Cadastrar%n", CADASTRAR);
                 System.out.printf("[%d] Sair%n", SAIR);
-                System.out.println("=======================================");
 
                 System.out.println();
                 System.out.println("Digite uma opção: ");
@@ -70,7 +79,6 @@ public class Principal {
                     case LOGIN:
                         // Chamando o método para realizar o login no banco.
                         LogarNoBanco.logarNoBanco(entrada, servidorEmail, bancoCriado);
-                        System.out.println("voltou para classe principal");
                         break;
                     
                     case CADASTRAR:

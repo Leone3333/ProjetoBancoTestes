@@ -72,12 +72,12 @@ public class LogarNoBanco {
 
             if (bancoCriado.getEnderecoADM().equals(emailParaLogar) && bancoCriado.getSenhaADM().equals(senhaParaLogar))
             {
-                AdministradorBanco.administradorBanco(entrada, bancoCriado);
+                AdministradorBanco.administradorBanco(entrada, bancoCriado, servidorEmail);
                 break;
             }
 
 
-            if (bancoCriado.getDados(i, TipoDeDado.EMAIL).equals(emailParaLogar) && bancoCriado.getDados(i, TipoDeDado.SENHA).equals(senhaParaLogar)) 
+            else if (bancoCriado.getDados(i, TipoDeDado.ENDERECODEEMAIL).equals(emailParaLogar) && bancoCriado.getDados(i, TipoDeDado.SENHA).equals(senhaParaLogar)) 
             {
                 usuarioEncontrado = true;
                 indexDoUsuario = i;
@@ -99,7 +99,7 @@ public class LogarNoBanco {
                 System.out.printf("[%d] Transferir%n", TRANSFERIR);
                 System.out.printf("[%d] Extrato%n", EXTRATO);
                 System.out.printf("[%d] Atualizar Dados%n", ATUALIZARDADOS);
-                System.out.printf("[%d] Excluir Conta%n", EXCLUIRCONTA);
+                System.out.printf("[%d] Deletar Conta%n", EXCLUIRCONTA);
                 System.out.printf("[%d] Sair%n", SAIR);
                 System.out.println("===================================================");
 

@@ -21,10 +21,11 @@ public class DeletarConta {
             try {
 
                 // Menu para deleção de conta
+                System.out.print("\033[H\033[2J");
                 System.out.println("======== DELETAR CONTA ========");
                 System.out.printf("[%d] Deletar conta%n", DELETARCONTA);
                 System.out.printf("[%d] Voltar%n", VOLTAR);
-                System.out.println("==========================================");
+                System.out.println("===============================");
 
                 System.out.println("Digite uma opção: ");
                 int opcao = entrada.nextInt();
@@ -42,7 +43,7 @@ public class DeletarConta {
                             // Deleta a conta do banco
                             System.out.print("\033[H\033[2J");
                             bancoCriado.removerConta(indexDoUsuario);
-                            System.out.println("Sua conta foi deletada com sucesso!");
+                            System.out.println("A conta foi deletada com sucesso!");
                             System.out.println("Pressione ENTER para continuar");
                             entrada.nextLine();
                         }
