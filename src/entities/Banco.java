@@ -2,9 +2,11 @@ package entities;
 
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.Scanner;
 
 import services.email.Email;
 import services.email.Mensagem;
+import validation.ValidarSenha;
 import entities.enums.TipoDeDado;
 
 // Classe que representa um Banco, responsável por gerenciar contas bancárias.
@@ -61,6 +63,19 @@ public class Banco {
         return null;
     }
 
+    public Integer getIndexDestinatarioPix(String contaDestinoPix){
+
+        for(int i = 0; i < contasNoBanco.size(); i++){
+            if (contasNoBanco.get(i).getEnderecoEmail().equals(contaDestinoPix) || contasNoBanco.get(i).getIdentificacao().equals(contaDestinoPix)) {
+                return i;
+            }
+        }
+        return null;
+    }
+
+    public void setSenhaADM(Scanner entrada) {
+        this.senhaDoAdm = ValidarSenha.solicitarEValidarSenha(entrada);
+    }
 
     // Método para obter o endereço de e-mail do banco
     public String getEmailDoBanco() {
@@ -154,6 +169,30 @@ public class Banco {
         }
 
         return "Não foi possível exibir os dados da conta";
+    }
+
+
+    // Método para exibir as informações da conta de acordo com o tipo
+    public String exibirDados(int index){
+        Conta conta = contasNoBanco.get(index);
+
+        // Verificar se a conta é uma instância de ContaPF ou ContaPJ e formatar os dados
+        if (conta instanceof ContaPF){
+            return "Nome do Titular: " + conta.getNome() + "\n"
+            + "Data de nascimento: " + conta.getData() + "\n"
+            + "CPF: " + conta.getIdentificacao() + "\n"
+            + "Tipo da Conta: " + conta.getTipoDaConta() + "\n"
+            + "Número da conta: " + conta.getNumeroDaConta() + "\n"
+            + "Endereço de e-mail " + conta.getEnderecoEmail();
+
+        } else {
+            return "Nome da Empresa: " + conta.getNome() + "\n"
+            + "Data de criação: " + conta.getData() + "\n"
+            + "CNPJ: " + conta.getIdentificacao() + "\n"
+            + "Tipo da Conta: " + conta.getTipoDaConta() + "\n"
+            + "Número da conta: " + conta.getNumeroDaConta() + "\n"
+            + "Endereço de e-mail " + conta.getEnderecoEmail();
+        }
     }
 
     // Método para enviar um código de verificação para um destinatário por e-mail

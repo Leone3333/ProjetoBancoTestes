@@ -12,23 +12,28 @@ public class AdministradorBanco {
 
         // Constantes para as opções do menu após o login
         final int LISTARCONTAS = 1;
-        final int DELETARCONTAS = 2;
-        final int ATUALIZARCONTA = 3;
-        final int SAIR = 4;
+        final int ALTERARSENHA = 2;
+        final int SAIR = 3;
+
+        // Constantes para as opções do menu após a seleção do usuário.
+        final int ATUALIZARDADOS = 1;
+        final int DELETARCONTA = 2;
+        final int EXIBIRDADOS = 3;
 
 
         // Flag para controlar o fluxo do programa.
         boolean running = true;
 
+         System.out.print("\033[H\033[2J");
         // Loop principal para o menu
         do {
             try {
                 // Menu do programa
+
                 System.out.println();
                 System.out.println("=============== MENU - ADMINISTRADOR  ===============");
                 System.out.printf("[%d] Listar Contas no Banco%n", LISTARCONTAS);
-                System.out.printf("[%d] Atualizar Conta%n", ATUALIZARCONTA);
-                System.out.printf("[%d] Deletar Conta%n", DELETARCONTAS);
+                System.out.printf("[%d] Alterar Senha do Administrador%n", ALTERARSENHA);
                 System.out.printf("[%d] Sair%n", SAIR);
                 System.out.println("=====================================================");
 
@@ -44,21 +49,61 @@ public class AdministradorBanco {
 
                 Integer indexDoUsuario;
                 switch (opcaoValida) {
+
                     case LISTARCONTAS:
 
-                        listasContas(entrada, bancoCriado);
+                        indexDoUsuario = listasContas(entrada, bancoCriado);
+
+                        System.out.print("\033[H\033[2J");
+                        System.out.println("Conta atual: " + bancoCriado.getDados(indexDoUsuario, TipoDeDado.NOME));
+                        System.out.println("=======================================");
+                        System.out.println("O que deseja fazer?");
+                        System.out.printf("[%d] Atualizar Dados %n", ATUALIZARDADOS);
+                        System.out.printf("[%d] Deletar Conta %n", DELETARCONTA);
+                        System.out.printf("[%d] Exibir Dados %n", EXIBIRDADOS);
+                        System.out.println("=======================================");
+
+                        System.out.println();
+                        System.out.println("Digite uma opção: ");
+                        opcao = entrada.next().trim();
+                        System.out.print("\033[H\033[2J");
+
+                        // Transformando a entrada String em Integer. Tratando exceções.
+                        opcaoValida = Integer.parseInt(opcao);
+
+                        switch (opcaoValida) {
+
+                            case ATUALIZARDADOS:
+
+                                AtualizarDadosConta.atualizarDadosConta(entrada, bancoCriado, indexDoUsuario, servidorEmail);
+                                break;
+
+                            case DELETARCONTA:
+
+                                DeletarConta.deletarConta(entrada, bancoCriado, indexDoUsuario, servidorEmail);
+                                break;
+
+                            case EXIBIRDADOS:
+
+                                System.out.println(bancoCriado.exibirDados(indexDoUsuario)); 
+                                break;
+
+                            default:
+
+                                // Exibindo mensagem de opção inválida.
+                                System.out.print("\033[H\033[2J");
+                                System.out.println("Digite uma opção válida.");
+                                break;
+
+                        }
+
                         break;
 
-                    case ATUALIZARCONTA:
+                    case ALTERARSENHA:
 
-                        indexDoUsuario = listasContas(entrada, bancoCriado);
-                        AtualizarDadosConta.atualizarDadosConta(entrada, bancoCriado, indexDoUsuario, servidorEmail);
-                        break;
-
-                    case DELETARCONTAS:
-                        
-                        indexDoUsuario = listasContas(entrada, bancoCriado);
-                        DeletarConta.deletarConta(entrada, bancoCriado, indexDoUsuario, servidorEmail);
+                        entrada.nextLine();
+                        bancoCriado.setSenhaADM(entrada);
+                        running = false;
                         break;
 
                     case SAIR:

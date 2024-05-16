@@ -52,7 +52,4 @@ public class ContaPF extends Conta {
         this.dataDeNascimento = ValidarPF.solicitarEValidarDataDeNascimento(entrada);
     }
 
-    
-
-    
 }

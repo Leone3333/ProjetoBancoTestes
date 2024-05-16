@@ -39,11 +39,17 @@ public class Principal {
         conta3.depositar(453.21D);
 
         // Contas Pessoa Jurídica
-        Conta conta4 = new ContaPJ("11223344", "Aliexpress", "13.236.697/0001-46", "12/04/2002", new Email("aliexpress@bol.com.br"));
+        Conta conta4 = new ContaPJ("11223344", "Aliexpress", "13.236.697/0001-46", "12/04/2002", new Email("aliexpress@aliexpress.com.br"));
         conta4.depositar(1923022.12D);
         
-        Conta conta5 = new ContaPJ("00001111", "Shopee", "54.289.446/0001-07", "12/04/2002", new Email("shopee@outlook.com"));
+        Conta conta5 = new ContaPJ("00001111", "Shopee", "54.289.446/0001-07", "12/04/2002", new Email("shopee@shopee.com.br"));
         conta5.depositar(2392545.93D);
+
+         Conta conta6 = new ContaPJ("13572468", "Netshoes", "09.339.936/0001-16", "14/02/2000", new Email("netshoes@netshoes.com.br"));
+        conta6.depositar(1022022.12D);
+        
+        Conta conta7 = new ContaPJ("22221111", "Adidas", "42.274.696/0001-94", "18/07/1924", new Email("adidas@adidas.com.br"));
+        conta7.depositar(9832545.93D);
 
         
         // Cadastrando as contas no banco
@@ -52,6 +58,8 @@ public class Principal {
         bancoCriado.cadastrarConta(conta3);
         bancoCriado.cadastrarConta(conta4);
         bancoCriado.cadastrarConta(conta5);
+        bancoCriado.cadastrarConta(conta6);
+        bancoCriado.cadastrarConta(conta7);
 
         // Flag para controlar o fluxo do programa.
         boolean running = true;

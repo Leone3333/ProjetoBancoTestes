@@ -14,7 +14,7 @@ public class LogarNoBanco {
         final int DEPOSITAR = 1;
         final int SACAR = 2;
         final int TRANSFERIR = 3;
-        final int EXTRATO = 4;
+        final int PIX = 4;
         final int ATUALIZARDADOS = 5;
         final int EXCLUIRCONTA = 6;
         final int SAIR = 7;
@@ -96,8 +96,8 @@ public class LogarNoBanco {
                 System.out.println("=========== Selecione a opção desejada: ===========");
                 System.out.printf("[%d] Depositar%n", DEPOSITAR);
                 System.out.printf("[%d] Sacar%n", SACAR);
-                System.out.printf("[%d] Transferir%n", TRANSFERIR);
-                System.out.printf("[%d] Extrato%n", EXTRATO);
+                System.out.printf("[%d] Transferir (TED)%n", TRANSFERIR);
+                System.out.printf("[%d] Pix%n", PIX);
                 System.out.printf("[%d] Atualizar Dados%n", ATUALIZARDADOS);
                 System.out.printf("[%d] Deletar Conta%n", EXCLUIRCONTA);
                 System.out.printf("[%d] Sair%n", SAIR);
@@ -118,13 +118,14 @@ public class LogarNoBanco {
                         Operacoes.sacar(entrada, bancoCriado, indexDoUsuario);
                         break;
 
+                        // Chama o método para Transferir
                     case TRANSFERIR:
                         Operacoes.transferir(entrada, bancoCriado, indexDoUsuario);
                         break;
-                    
-                    case EXTRATO:
-                        // Chama o método para exibir o extrato
-                        // Implemente a funcionalidade do extrato aqui
+
+                        // Chama o método para realizar Pix
+                    case PIX:
+                        Operacoes.pix(entrada, bancoCriado, indexDoUsuario);
                         break;
 
                     case ATUALIZARDADOS:

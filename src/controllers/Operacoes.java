@@ -6,7 +6,6 @@ import entities.Banco;
 import entities.enums.TipoDeDado;
 
 public class Operacoes {
-
     public static void depositar(Scanner entrada, Banco bancoCriado, Integer indexDoUsuario){
         
         Locale.setDefault(Locale.US);
@@ -68,6 +67,33 @@ public class Operacoes {
             System.out.println("Impossível realizar a transferência!");
         }
 
+    }
+
+    public static void pix(Scanner entrada, Banco bancoCriado, Integer indexDoUsuario){
+
+        Locale.setDefault(Locale.US);
+
+        System.out.print("\033[H\033[2J");
+        System.out.println("Digite o valor que deseja transferir: ");
+        Double valorParaPix = entrada.nextDouble();
+        System.out.println();
+        System.out.println("Digite a chave PIX da conta que irá receber a transferência (CPF ou EMAIL): ");
+
+        entrada.nextLine();
+        String chavePixRecebedora = entrada.nextLine();
+
+        // Pegando o index da conta que irá receber e guardando em indexDestino
+        Integer indexDestinoPix = bancoCriado.getIndexDestinatario(chavePixRecebedora);
+
+        // Pegando o nome de quem irá receber o dinheiro
+        String nomeDoRecebedorPix = bancoCriado.getDados(indexDestinoPix, TipoDeDado.NOME);
+
+         // Sacando da conta que está enviando o dinheiro e depositando na conta recebedora
+         if (bancoCriado.getConta(indexDoUsuario).sacar(valorParaPix) && bancoCriado.getConta(indexDestinoPix).depositar(valorParaPix)) {
+            System.out.println("Pix no valor de R$ " + valorParaPix + " Realizado com Sucesso para " + nomeDoRecebedorPix);
+        }else{
+            System.out.println("Impossível realizar a transferência!");
+        }
     }
 
     public static void extrato(Scanner entrada, Banco bancoCriado, Integer indexDoUsuario){
