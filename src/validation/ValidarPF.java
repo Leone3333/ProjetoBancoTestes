@@ -58,7 +58,7 @@ public class ValidarPF{
                 System.out.println("O CPF deve ser válido! No formato 111.222.333-44"); 
                 System.out.println();
                 
-            } else if(ValidarDadosExistentes.validar(bancoCriado, cpfDigitado)){
+            } else if(ValidarDadosExistentes.verificarExistencia(bancoCriado, cpfDigitado)){
                 System.out.println("O CPF " + cpfDigitado + " já está cadastrado." );
                 System.out.println();
 

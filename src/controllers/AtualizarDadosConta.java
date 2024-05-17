@@ -7,9 +7,20 @@ import entities.Banco;
 import entities.enums.TipoDeDado;
 import services.email.Servidor;
 
+/**
+ * Classe responsável por fornecer métodos para atualizar os dados da conta no banco.
+ */
 public class AtualizarDadosConta {
     
-    public static void atualizarDadosConta(Scanner entrada, Banco bancoCriado, Integer indexDoUsuario, Servidor servidorEmail){
+    /**
+     * Método para iniciar o processo de atualização dos dados da conta.
+     * 
+     * @param entrada       Scanner para entrada de dados do usuário.
+     * @param bancoCriado   Banco onde a conta está cadastrada.
+     * @param indexDoUsuario Índice da conta do usuário no banco.
+     * @param servidorEmail Servidor de e-mail para notificações.
+     */
+    public static void atualizarDadosConta(Scanner entrada, Banco bancoCriado, Integer indexDoUsuario, Servidor servidorEmail) {
 
         // Constantes para as opções do menu de atualização de dados da conta
         final int ATUALIZARNOME = 1;
@@ -22,7 +33,6 @@ public class AtualizarDadosConta {
 
         do {
             try {
-
                 // Menu para atualização de dados da conta
                 System.out.println("======== ATUALIZAR DADOS DA CONTA ========");
                 System.out.printf("[%d] Atualizar nome%n", ATUALIZARNOME);

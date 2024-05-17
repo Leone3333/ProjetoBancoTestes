@@ -8,100 +8,148 @@ import services.email.Servidor;
 import validation.ValidarEmail;
 import validation.ValidarSenha;
 
-// Classe abstrata Conta que serve como modelo para ContaPF e ContaPJ  
-public abstract class Conta{
+/**
+ * Classe abstrata Conta que serve como modelo para ContaPF e ContaPJ.
+ */
+public abstract class Conta {
 
-    // Atributos protegidos para serem acessados pelas subclasses.
-    protected String numeroDaConta;
-    protected String tipoDaConta;
-    protected String senhaDaConta;
-    protected double saldoDaConta;
-    protected Email enderecoEmail;
+    protected String numeroDaConta; // Número da conta
+    protected String tipoDaConta; // Tipo da conta
+    protected String senhaDaConta; // Senha da conta
+    protected double saldoDaConta; // Saldo da conta
+    protected Email enderecoEmail; // Endereço de email associado à conta
     
-    // Método construtor da classe Conta
+    /**
+     * Construtor da classe Conta.
+     * @param senhaDaConta a senha da conta
+     * @param enderecoEmail o endereço de email associado à conta
+     */
     public Conta(String senhaDaConta, Email enderecoEmail){
         this.senhaDaConta = senhaDaConta;
         this.enderecoEmail = enderecoEmail;
         this.numeroDaConta = gerarNumeroDaConta(); // Gera um número de conta
     }
 
-    // Métodos abstratos a serem implementados pelas subclasses
-    public abstract String getIdentificacao(); // Retorna a identificação (CPF ou CNPJ)
-    public abstract String getNome(); // Retorna o nome da empresa ou da pessoa
-    public abstract String getData(); // Retorna a data de criação da empresa ou data de nascimento da pessoa física
+    /**
+     * Método abstrato para obter a identificação (CPF ou CNPJ) da conta.
+     * @return a identificação (CPF ou CNPJ) da conta
+     */
+    public abstract String getIdentificacao();
 
-    public abstract void setNome(Scanner entrada); // Define o nome da empresa ou da pessoa
-    public abstract void setData(Scanner entrada); // Define a data de criação da empresa ou data de nascimento da pessoa física
+    /**
+     * Método abstrato para obter o nome do titular da conta.
+     * @return o nome do titular da conta
+     */
+    public abstract String getNome();
 
-    // Retorna o endereço de e-mail
+    /**
+     * Método abstrato para obter a data associada à conta (data de nascimento ou data de criação).
+     * @return a data associada à conta
+     */
+    public abstract String getData();
+
+    /**
+     * Método abstrato para definir o nome do titular da conta.
+     * @param entrada scanner para entrada de dados
+     */
+    public abstract void setNome(Scanner entrada);
+
+    /**
+     * Método abstrato para definir a data associada à conta (data de nascimento ou data de criação).
+     * @param entrada scanner para entrada de dados
+     */
+    public abstract void setData(Scanner entrada);
+
+    /**
+     * Obtém o endereço de email associado à conta.
+     * @return o endereço de email associado à conta
+     */
     public String getEnderecoEmail(){
         return this.enderecoEmail.getEmail();
     }
 
-    public Email getEmail(){
-        return this.enderecoEmail;
+    /**
+     * Define o endereço de e-mail da conta.
+     * @param enderecoEmail O novo endereço de e-mail a ser definido.
+     */
+    public void setEnderecoEmail(Scanner entrada, Banco bancoCriado, Servidor servidorEmail) {
+        this.enderecoEmail = ValidarEmail.solicitarEValidarEmail(entrada, bancoCriado, servidorEmail); 
     }
 
-    //Mudar o endereço de e-mail
-    public void setEnderecoEmail(Scanner entrada, Banco bancoCriado, Servidor servidorEmail){
-        enderecoEmail.deletarCaixaDeEntrada();
-        enderecoEmail.setEmail(ValidarEmail.atualizarEValidarEmail(entrada, bancoCriado, servidorEmail));
-    }
-
-    // Retorna o tipo da conta
+    /**
+     * Obtém o tipo da conta.
+     * @return o tipo da conta
+     */
     public String getTipoDaConta(){
         return this.tipoDaConta;
     }
 
-    // Retorna o número da conta
+    /**
+     * Obtém o número da conta.
+     * @return o número da conta
+     */
     public String getNumeroDaConta(){
         return this.numeroDaConta;
     }
 
-    // Retorna o saldo da conta
+    /**
+     * Obtém o saldo da conta.
+     * @return o saldo da conta
+     */
     public String getSaldo(){
         return String.format("%.2f", saldoDaConta);
     }
 
-    //Retorna a senha da conta
+    /**
+     * Obtém a senha da conta.
+     * @return a senha da conta
+     */
     public String getSenha(){
         return this.senhaDaConta;
     }
 
-    //Atualizar a senha da conta.
+  
     public void setSenha(Scanner entrada){
         this.senhaDaConta = ValidarSenha.solicitarEValidarSenha(entrada); 
     }
 
-    // Método para gerar um número de conta
+    /**
+     * Método para gerar um número de conta.
+     * @return o número de conta gerado
+     */
     public String gerarNumeroDaConta(){
         Random range = new Random();
-        Integer codigo = range.nextInt(99999 - 10000 + 1) + 10000; //entre 10000 e 99999  
-        Integer digito = range.nextInt(9 - 1 + 1) + 1; //entre 1 e 9 
-        String idGerado = codigo.toString() + "-" + digito.toString(); 
-        return idGerado;
+        Integer codigo = range.nextInt(99999 - 10000 + 1) + 10000; // entre 10000 e 99999  
+        Integer digito = range.nextInt(9 - 1 + 1) + 1; // entre 1 e 9 
+        return codigo.toString() + "-" + digito.toString(); 
     }
 
-    // Método para depositar dinheiro na conta
+    /**
+     * Método para depositar dinheiro na conta.
+     * @param valor o valor a ser depositado
+     * @return true se o depósito for bem-sucedido, false caso contrário
+     */
     public Boolean depositar(double valor){
-
         boolean depositou = false;
-        if(valor >= 1){
-        this.saldoDaConta += valor;
-        depositou = true;
+        if(valor >= 0.01){
+            this.saldoDaConta += valor;
+            depositou = true;
         } else {
-            System.out.println("o Valor mínimo para depósito é de R$ 1,00!");
+            System.out.println("o Valor mínimo para depósito é de R$ 0,01!");
         }
         return depositou;
     }
     
+    /**
+     * Método para sacar dinheiro da conta.
+     * @param valor o valor a ser sacado
+     * @return true se o saque for bem-sucedido, false caso contrário
+     */
     public boolean sacar(double valor){
         boolean sacou = false;
         if(valor <= saldoDaConta && valor > 0){
-            
             this.saldoDaConta -= valor;
             return sacou = true;
-
         } else{
             System.out.println("Impossível sacar este valor!");
         }

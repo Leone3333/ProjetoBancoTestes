@@ -6,8 +6,19 @@ import java.util.Scanner;
 import entities.Banco;
 import services.email.Servidor;
 
+/**
+ * Classe responsável por fornecer métodos para deletar uma conta do banco.
+ */
 public class DeletarConta {
 
+    /**
+     * Método para deletar uma conta do banco.
+     * 
+     * @param entrada       Scanner para entrada de dados do usuário.
+     * @param bancoCriado   Banco onde a conta está armazenada.
+     * @param indexDoUsuario    Índice da conta a ser deletada.
+     * @param servidorEmail Servidor de e-mail para notificações.
+     */
     public static void deletarConta(Scanner entrada, Banco bancoCriado, Integer indexDoUsuario, Servidor servidorEmail){
 
         // Constantes para as opções do menu de deleção de conta
@@ -17,10 +28,7 @@ public class DeletarConta {
         boolean running = true;
 
         do {
-
             try {
-
-                // Menu para deleção de conta
                 System.out.print("\033[H\033[2J");
                 System.out.println("======== DELETAR CONTA ========");
                 System.out.printf("[%d] Deletar conta%n", DELETARCONTA);
@@ -32,40 +40,29 @@ public class DeletarConta {
                 entrada.nextLine();
 
                 switch (opcao) {
-                    
                     case DELETARCONTA:
-                        // Opção para deletar a conta
-                        System.out.println("Atenção! Essa ação não pode ser revertida.");
-                        System.out.println("Deseja Encerrar a conta? [S]im ou [N]ão");
-                        String valorEscolhido = entrada.nextLine().toLowerCase().substring(0,1);
-
-                        if (valorEscolhido.equals("s")) {
-                            // Deleta a conta do banco
+                        if (confirmarDelecao(entrada)) {
                             System.out.print("\033[H\033[2J");
                             bancoCriado.removerConta(indexDoUsuario);
                             System.out.println("A conta foi deletada com sucesso!");
-                            System.out.println("Pressione ENTER para continuar");
+                            System.out.println("Pressione ENTER para continuar.");
                             entrada.nextLine();
                         }
-
                         running = false;
                         break;
 
                     case VOLTAR:
-                        // Retorna ao menu anterior
                         running = false;
                         System.out.print("\033[H\033[2J");
                         break;
 
                     default:
-                        // Exibe mensagem se a opção for inválida
                         System.out.print("\033[H\033[2J");
-                        System.out.println("Digite alguma das opções abaixo: ");
+                        System.out.println("Digite uma opção válida.");
                         break;
                 }
         
             } catch(InputMismatchException e) {
-                // Trata erro de entrada inválida
                 System.out.print("\033[H\033[2J");
                 System.out.println("============ ATENÇÃO! ===========");
                 System.out.println("      Digite apenas números!     ");
@@ -76,5 +73,27 @@ public class DeletarConta {
             }
 
         } while(running);
+    }
+
+    /**
+     * Método auxiliar para confirmar a deleção de uma conta.
+     * 
+     * @param entrada   Scanner para entrada de dados do usuário.
+     * @return          true se o usuário confirmar a deleção, false caso contrário.
+     */
+    private static boolean confirmarDelecao(Scanner entrada) {
+        System.out.println("Atenção! Essa ação não pode ser revertida.");
+        System.out.println("Deseja encerrar a conta? [S]im ou [N]ão");
+
+        while (true) {
+            String resposta = entrada.nextLine().trim().toLowerCase();
+            if (resposta.equals("s")) {
+                return true;
+            } else if (resposta.equals("n")) {
+                return false;
+            } else {
+                System.out.println("Resposta inválida. Digite [S] para sim ou [N] para não.");
+            }
+        }
     }
 }

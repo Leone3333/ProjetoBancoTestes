@@ -5,7 +5,18 @@ import java.util.Locale;
 import entities.Banco;
 import entities.enums.TipoDeDado;
 
+/**
+ * Esta classe contém métodos para realizar operações bancárias, como depósito, saque, transferência e PIX.
+ */
 public class Operacoes {
+
+    /**
+     * Método para realizar um depósito em uma conta bancária.
+     * 
+     * @param entrada       Scanner para entrada de dados do usuário.
+     * @param bancoCriado   Banco onde a conta está localizada.
+     * @param indexDoUsuario    Índice da conta bancária do usuário.
+     */
     public static void depositar(Scanner entrada, Banco bancoCriado, Integer indexDoUsuario){
         
         Locale.setDefault(Locale.US);
@@ -25,6 +36,13 @@ public class Operacoes {
         
     }
 
+    /**
+     * Método para realizar um saque em uma conta bancária.
+     * 
+     * @param entrada       Scanner para entrada de dados do usuário.
+     * @param bancoCriado   Banco onde a conta está localizada.
+     * @param indexDoUsuario    Índice da conta bancária do usuário.
+     */
     public static void sacar(Scanner entrada, Banco bancoCriado, Integer indexDoUsuario){
 
         Locale.setDefault(Locale.US);
@@ -41,6 +59,13 @@ public class Operacoes {
         
     }
 
+    /**
+     * Método para realizar uma transferência entre contas bancárias.
+     * 
+     * @param entrada       Scanner para entrada de dados do usuário.
+     * @param bancoCriado   Banco onde a conta está localizada.
+     * @param indexDoUsuario    Índice da conta bancária do usuário.
+     */
     public static void transferir(Scanner entrada, Banco bancoCriado, Integer indexDoUsuario){
 
         Locale.setDefault(Locale.US);
@@ -69,6 +94,13 @@ public class Operacoes {
 
     }
 
+    /**
+     * Método para realizar uma transferência PIX entre contas bancárias.
+     * 
+     * @param entrada       Scanner para entrada de dados do usuário.
+     * @param bancoCriado   Banco onde a conta está localizada.
+     * @param indexDoUsuario    Índice da conta bancária do usuário.
+     */
     public static void pix(Scanner entrada, Banco bancoCriado, Integer indexDoUsuario){
 
         Locale.setDefault(Locale.US);
@@ -94,13 +126,5 @@ public class Operacoes {
         }else{
             System.out.println("Impossível realizar a transferência!");
         }
-    }
-
-    public static void extrato(Scanner entrada, Banco bancoCriado, Integer indexDoUsuario){
-
-        System.out.println(bancoCriado.getDados(indexDoUsuario, TipoDeDado.EMAIL)); 
-        System.out.println();
-        System.out.println("Estamos na tela de extrato, deu certo");
-
     }
 }

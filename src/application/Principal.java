@@ -6,8 +6,16 @@ import services.email.*;
 import controllers.*;
 import entities.*;
 
+/**
+ * Classe principal que contém o método main para execução do programa.
+ */
 public class Principal {
 
+    /**
+     * Método main para iniciar a execução do programa.
+     * 
+     * @param args Argumentos da linha de comando (não utilizados).
+     */
     public static void main(String[] args) {
 
         // Variáveis constantes para as opções do menu.
@@ -40,7 +48,7 @@ public class Principal {
 
         // Contas Pessoa Jurídica
         Conta conta4 = new ContaPJ("11223344", "Aliexpress", "13.236.697/0001-46", "12/04/2002", new Email("aliexpress@aliexpress.com.br"));
-        conta4.depositar(1923022.12D);
+        conta4.depositar(1000D);
         
         Conta conta5 = new ContaPJ("00001111", "Shopee", "54.289.446/0001-07", "12/04/2002", new Email("shopee@shopee.com.br"));
         conta5.depositar(2392545.93D);

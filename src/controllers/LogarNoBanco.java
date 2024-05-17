@@ -6,8 +6,18 @@ import entities.Banco;
 import services.email.Servidor;
 import entities.enums.TipoDeDado;
 
+/**
+ * Esta classe contém métodos para realizar o login no sistema bancário.
+ */
 public class LogarNoBanco {
 
+    /**
+     * Método para realizar o login no sistema bancário.
+     * 
+     * @param entrada           Scanner para entrada de dados do usuário.
+     * @param servidorEmail     Servidor de e-mail para comunicação.
+     * @param bancoCriado       Banco de dados onde as informações estão armazenadas.
+     */
     public static void logarNoBanco(Scanner entrada, Servidor servidorEmail, Banco bancoCriado){
 
         // Constantes para as opções do menu após o login

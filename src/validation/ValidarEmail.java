@@ -29,7 +29,7 @@ public class ValidarEmail {
                 System.out.println();
             }
 
-             else if(ValidarDadosExistentes.validar(bancoCriado, emailDigitado)){
+             else if(ValidarDadosExistentes.verificarExistencia(bancoCriado, emailDigitado)){
                 System.out.println("O E-mail " + emailDigitado + " já está cadastrado." );   
                 System.out.println();
             }
@@ -125,7 +125,7 @@ public class ValidarEmail {
                 System.out.println();
             }
 
-            else if(ValidarDadosExistentes.validar(bancoCriado, emailDigitado)){
+            else if(ValidarDadosExistentes.verificarExistencia(bancoCriado, emailDigitado)){
                 System.out.println("O E-mail " + emailDigitado + " já está cadastrado." );   
                 System.out.println();
             }

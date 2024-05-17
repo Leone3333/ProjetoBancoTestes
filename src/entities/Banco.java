@@ -9,7 +9,9 @@ import services.email.Mensagem;
 import validation.ValidarSenha;
 import entities.enums.TipoDeDado;
 
-// Classe que representa um Banco, responsável por gerenciar contas bancárias.
+/**
+ * Classe que representa um Banco, responsável por gerenciar contas bancárias.
+ */
 public class Banco {
     
     // Atributos
@@ -23,7 +25,13 @@ public class Banco {
 
     private ArrayList<Conta> contasNoBanco; // Lista de contas no banco
 
-    // Método construtor para criar o banco
+    /**
+     * Método construtor para criar o banco.
+     * @param nomeDoBanco O nome do banco.
+     * @param emailDoBanco O endereço de e-mail do banco.
+     * @param emailDoAdm O endereço de e-mail do administrador do banco.
+     * @param senhaDoAdm A senha do administrador do banco.
+     */
     public Banco(String nomeDoBanco, String emailDoBanco, String emailDoAdm, String senhaDoAdm) {
         this.nomeDoBanco = nomeDoBanco; // Inicializa o nome do banco
         this.numeroDaAgencia = gerarNumeroDaAgencia(); // Gera o número da agência
@@ -33,26 +41,43 @@ public class Banco {
         this.contasNoBanco = new ArrayList<>(); // Inicializa a lista de contas
     }
 
-    // Método para obter o nome do banco
+    /**
+     * Obtém o nome do banco.
+     * @return O nome do banco.
+     */
     public String getNomeDoBanco() {
         return this.nomeDoBanco;
     }
 
-    // Método para obter endereço de e-mail do ADM do banco.
+    /**
+     * Obtém o endereço de e-mail do administrador do banco.
+     * @return O endereço de e-mail do administrador do banco.
+     */
     public String getEnderecoADM(){
         return this.emailDoAdm.getEmail();
     }
 
+    /**
+     * Obtém a senha do administrador do banco.
+     * @return A senha do administrador do banco.
+     */
     public String getSenhaADM(){
         return this.senhaDoAdm;
     }
 
-    // Método para obter a lista de contas no banco
+    /**
+     * Obtém a lista de contas no banco.
+     * @return A lista de contas no banco.
+     */
     public ArrayList<Conta> getContasNoBanco() {
         return this.contasNoBanco;
     }
 
-    // Método para obter os dados do destinatário
+    /**
+     * Obtém o índice do destinatário com base no número da conta.
+     * @param contaDestino O número da conta do destinatário.
+     * @return O índice do destinatário na lista de contas, ou null se não encontrado.
+     */
     public Integer getIndexDestinatario(String contaDestino){
 
         for(int i = 0; i < contasNoBanco.size(); i++){
@@ -63,6 +88,11 @@ public class Banco {
         return null;
     }
 
+    /**
+     * Obtém o índice do destinatário com base no número da conta PIX ou endereço de e-mail.
+     * @param contaDestinoPix O número da conta PIX ou endereço de e-mail do destinatário.
+     * @return O índice do destinatário na lista de contas, ou null se não encontrado.
+     */
     public Integer getIndexDestinatarioPix(String contaDestinoPix){
 
         for(int i = 0; i < contasNoBanco.size(); i++){
@@ -73,23 +103,36 @@ public class Banco {
         return null;
     }
 
+    /**
+     * Define a senha do administrador do banco.
+     * @param entrada O objeto Scanner para entrada do usuário.
+     */
     public void setSenhaADM(Scanner entrada) {
         this.senhaDoAdm = ValidarSenha.solicitarEValidarSenha(entrada);
     }
 
-    // Método para obter o endereço de e-mail do banco
+    /**
+     * Obtém o endereço de e-mail do banco.
+     * @return O endereço de e-mail do banco.
+     */
     public String getEmailDoBanco() {
         return this.emailDoBanco.getEmail();
     }
 
-    // Método para obter o número da agência bancária
+    /**
+     * Obtém o número da agência bancária.
+     * @return O número da agência bancária.
+     */
     public String getNumeroDaAgencia() {
         return this.numeroDaAgencia;
     }
 
-
-
-    // Método para obter dados específicos de uma conta com base no índice e no tipo de dado
+    /**
+     * Obtém dados específicos de uma conta com base no índice e no tipo de dado.
+     * @param index O índice da conta na lista de contas.
+     * @param dado O tipo de dado a ser obtido.
+     * @return O dado específico da conta.
+     */
     public String getDados(int index, TipoDeDado dado){
 
         switch (dado) {
@@ -117,23 +160,37 @@ public class Banco {
 
     // Métodos para manipular a lista de contas no banco
 
-    // Método para obter uma conta pelo índice na lista
+    /**
+     * Obtém uma conta pelo índice na lista de contas.
+     * @param index O índice da conta na lista de contas.
+     * @return A conta correspondente ao índice.
+     */
     public Conta getConta(int index){
         return contasNoBanco.get(index);
     }
 
-    // Método para adicionar uma conta à lista de contas do banco
+    /**
+     * Adiciona uma conta à lista de contas do banco.
+     * @param conta A conta a ser adicionada.
+     */
     public void cadastrarConta(Conta conta){
         this.contasNoBanco.add(conta);
     }
 
-    // Método para remover uma conta da lista de contas do banco
+       /**
+     * Remove uma conta da lista de contas do banco.
+     * @param indexDoUsuario O índice da conta a ser removida na lista de contas.
+     */
     public void removerConta(int indexDoUsuario){
         contasNoBanco.remove(indexDoUsuario);
     }
+
     // Outros métodos
 
-    // Método para gerar um número da agência
+    /**
+     * Gera um número da agência aleatório.
+     * @return O número da agência gerado.
+     */
     public String gerarNumeroDaAgencia(){
         Random range = new Random();
         Integer codigo = range.nextInt(9999 - 1000 + 1) + 1000;
@@ -142,7 +199,11 @@ public class Banco {
         return idGerado;
     }
 
-    // Método para exibir as informações da conta de acordo com o tipo
+    /**
+     * Exibe as informações da conta de acordo com o tipo de busca.
+     * @param informacaoBusca O número da conta ou endereço de e-mail do titular da conta.
+     * @return As informações da conta formatadas.
+     */
     public String exibirDados(String informacaoBusca){
 
         for(Conta conta : contasNoBanco){
@@ -171,8 +232,11 @@ public class Banco {
         return "Não foi possível exibir os dados da conta";
     }
 
-
-    // Método para exibir as informações da conta de acordo com o tipo
+    /**
+     * Exibe as informações da conta com base no índice na lista de contas.
+     * @param index O índice da conta na lista de contas.
+     * @return As informações da conta formatadas.
+     */
     public String exibirDados(int index){
         Conta conta = contasNoBanco.get(index);
 
@@ -195,7 +259,11 @@ public class Banco {
         }
     }
 
-    // Método para enviar um código de verificação para um destinatário por e-mail
+    /**
+     * Envia um código de verificação para um destinatário por e-mail.
+     * @param emailDoDestinatario O endereço de e-mail do destinatário.
+     * @return A mensagem contendo o código de verificação.
+     */
     public Mensagem enviarCodigo(String emailDoDestinatario){
 
         Random range = new Random();
@@ -207,7 +275,11 @@ public class Banco {
 
     }
 
-    // Método para verificar se um código digitado corresponde ao código enviado anteriormente
+    /**
+     * Verifica se um código digitado corresponde ao código enviado anteriormente.
+     * @param codigoDigitado O código digitado pelo usuário.
+     * @return true se o código corresponde, false caso contrário.
+     */
     public boolean verificarCodigo(Integer codigoDigitado){
         if(codigoDigitado.equals(codigoEnviado)){
             return true;
@@ -216,7 +288,11 @@ public class Banco {
         }
     }
 
-    // Método para enviar os dados da conta criada para um destinatário por e-mail
+    /**
+     * Envia os dados da conta criada para um destinatário por e-mail.
+     * @param emailDoDestinatario O endereço de e-mail do destinatário.
+     * @return A mensagem contendo os dados da conta.
+     */
     public Mensagem enviarDados(String emailDoDestinatario){
         String contaCriada = 
           "Boas notícias! Sua conta foi criada com sucesso." + "\n" 
@@ -228,3 +304,6 @@ public class Banco {
         return mensagem;
     }
 }
+
+
+     
