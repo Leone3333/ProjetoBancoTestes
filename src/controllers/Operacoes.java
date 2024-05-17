@@ -1,6 +1,7 @@
 package controllers;
 
 import java.util.Scanner;
+import java.util.InputMismatchException;
 import java.util.Locale;
 import entities.Banco;
 import entities.enums.TipoDeDado;
@@ -17,7 +18,7 @@ public class Operacoes {
      * @param bancoCriado   Banco onde a conta está localizada.
      * @param indexDoUsuario    Índice da conta bancária do usuário.
      */
-    public static void depositar(Scanner entrada, Banco bancoCriado, Integer indexDoUsuario){
+    public static void depositar(Scanner entrada, Banco bancoCriado, Integer indexDoUsuario) throws InputMismatchException{
         
         Locale.setDefault(Locale.US);
 
@@ -46,17 +47,32 @@ public class Operacoes {
     public static void sacar(Scanner entrada, Banco bancoCriado, Integer indexDoUsuario){
 
         Locale.setDefault(Locale.US);
+        try{
 
-        System.out.print("\033[H\033[2J");
-        System.out.println("Digite o valor que deseja sacar: ");
-        Double valorParaSaque = entrada.nextDouble();
+            System.out.print("\033[H\033[2J");
+            System.out.println("Digite o valor que deseja sacar: ");
+            Double valorParaSaque = entrada.nextDouble();
 
-        System.out.print("\033[H\033[2J");
-        if (bancoCriado.getConta(indexDoUsuario).sacar(valorParaSaque)){
-        System.out.println("Saque no valor de R$" + valorParaSaque + " Realizado com Sucesso!");
+            System.out.print("\033[H\033[2J");
+            if (bancoCriado.getConta(indexDoUsuario).sacar(valorParaSaque)){
+            System.out.println("Saque no valor de R$" + valorParaSaque + " Realizado com Sucesso!");
+            }
+            System.out.println("Seu saldo atual é: R$" + bancoCriado.getDados(indexDoUsuario, TipoDeDado.SALDO));
+            
+        } catch(InputMismatchException e){
+
+              // Tratando erro de conversão de String para Integer.
+              System.out.print("\033[H\033[2J");
+              System.out.println("============ ATENÇÃO! ===========");
+              System.out.println("      Digite apenas números!     ");
+              System.out.println("=================================");
+              System.out.println("Pressione ENTER pra continuar.");
+              entrada.nextLine();
+              entrada.nextLine();
+              System.out.print("\033[H\033[2J");
+
         }
-        System.out.println("Seu saldo atual é: R$" + bancoCriado.getDados(indexDoUsuario, TipoDeDado.SALDO));
-        
+
     }
 
     /**
@@ -68,6 +84,8 @@ public class Operacoes {
      */
     public static void transferir(Scanner entrada, Banco bancoCriado, Integer indexDoUsuario){
 
+
+        
         Locale.setDefault(Locale.US);
 
         System.out.print("\033[H\033[2J");
@@ -101,7 +119,8 @@ public class Operacoes {
      * @param bancoCriado   Banco onde a conta está localizada.
      * @param indexDoUsuario    Índice da conta bancária do usuário.
      */
-    public static void pix(Scanner entrada, Banco bancoCriado, Integer indexDoUsuario){
+    public static void 
+    pix(Scanner entrada, Banco bancoCriado, Integer indexDoUsuario){
 
         Locale.setDefault(Locale.US);
 
@@ -109,13 +128,13 @@ public class Operacoes {
         System.out.println("Digite o valor que deseja transferir: ");
         Double valorParaPix = entrada.nextDouble();
         System.out.println();
-        System.out.println("Digite a chave PIX da conta que irá receber a transferência (CPF ou EMAIL): ");
+        System.out.println("Digite a chave PIX da conta que irá receber a transferência (CPF/CNPJ ou EMAIL): ");
 
         entrada.nextLine();
         String chavePixRecebedora = entrada.nextLine();
 
         // Pegando o index da conta que irá receber e guardando em indexDestino
-        Integer indexDestinoPix = bancoCriado.getIndexDestinatario(chavePixRecebedora);
+        Integer indexDestinoPix = bancoCriado.getIndexDestinatarioPix(chavePixRecebedora);
 
         // Pegando o nome de quem irá receber o dinheiro
         String nomeDoRecebedorPix = bancoCriado.getDados(indexDestinoPix, TipoDeDado.NOME);
