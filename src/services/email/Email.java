@@ -77,7 +77,7 @@ public class Email {
     public void exibirEmailsRecebidos() {
         String caminhoDoArquivo = "servidorDeEmail\\" + "caixaDeEntrada-" + getEmail() + ".txt";
 
-        try (BufferedWriter arquivo = new BufferedWriter(new FileWriter(caminhoDoArquivo, true))) {
+        try (BufferedWriter arquivo = new BufferedWriter(new FileWriter(caminhoDoArquivo))) {
             for (Mensagem mensagem : mensagensRecebidas) {
                 arquivo.write(mensagem.exibirMensagem());
                 arquivo.newLine();

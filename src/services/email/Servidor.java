@@ -1,5 +1,6 @@
 package services.email;
 
+import java.io.File;
 import java.util.ArrayList;
 
 /**
@@ -30,7 +31,7 @@ public class Servidor {
         return novoEmail;
     }
 
-    /**
+/**
  * Método para armazenar uma mensagem para um destinatário
  * @param mensagem a mensagem a ser armazenada
  */
@@ -62,4 +63,33 @@ public void armazenarMensagem(Mensagem mensagem) {
     public ArrayList<Email> getEmailsCadastrados() {
         return this.emailsCadastrados;
     }
+
+
+      public void limparPastaDeEmails() {
+        // Diretório da pasta de e-mails
+        String diretorio = "servidorDeEmail\\";
+
+        // Criando o objeto File para representar o diretório
+        File pastaEmails = new File(diretorio);
+
+        // Verificando se o diretório existe
+        if (pastaEmails.exists() && pastaEmails.isDirectory()) {
+            // Listando os arquivos na pasta de e-mails
+            File[] arquivos = pastaEmails.listFiles();
+
+            // Verificando se há arquivos na pasta
+            if (arquivos != null) {
+                // Iterando sobre os arquivos
+                for (File arquivo : arquivos) {
+                    // Verificando se o arquivo não é o "CaixaDeEntrada"
+                    if (!arquivo.getName().equals("CaixaDeEntrada")) {
+                        // Deletando o arquivo
+                        arquivo.delete();
+                    }
+                }
+            }
+        }
+    }
 }
+
+

@@ -125,6 +125,9 @@ public class Principal {
         } while (running);
 
         // Fechando o Scanner.
-        entrada.close();        
+        entrada.close();  
+        
+        //Limpar a pasta  servidorDeEmail
+        servidorEmail.limparPastaDeEmails();
     }
 }

@@ -16,19 +16,21 @@ public class Mensagem {
     private String conteudo;
     private LocalDate dataEnvio;
     private LocalTime horaEnvio;
+    private DateTimeFormatter formatoData = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+    private DateTimeFormatter formatoHora = DateTimeFormatter.ofPattern("HH:mm:ss");
 
     /**
      * Construtor da classe Mensagem
      * @param remetente o endereço de email do remetente
      * @param destinatario o endereço de email do destinatário
      * @param conteudo o conteúdo da mensagem
-     * @param dataEnvio a data de envio da mensagem
-     * @param horaEnvio a hora de envio da mensagem
      */
     public Mensagem(String remetente, String destinatario, String conteudo) {
         this.remetente = remetente;
         this.destinatario = destinatario;
         this.conteudo = conteudo;
+        this.dataEnvio = LocalDate.now();
+        this.horaEnvio = LocalTime.now();
     }
 
     /**
@@ -76,9 +78,6 @@ public class Mensagem {
      * @return uma string com os detalhes da mensagem formatados
      */
     public String exibirMensagem() {
-        DateTimeFormatter formatoData = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        DateTimeFormatter formatoHora = DateTimeFormatter.ofPattern("HH:mm:ss");
-
         return "==============================================" + "\n"
                 + "Enviado em " + this.dataEnvio.format(formatoData) + " às "
                 + this.horaEnvio.format(formatoHora) + "\n"
