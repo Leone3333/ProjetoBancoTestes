@@ -69,6 +69,9 @@ public class Principal {
         bancoCriado.cadastrarConta(conta6);
         bancoCriado.cadastrarConta(conta7);
 
+        //Criar a pasta para armazenar as caixas de entrada
+        servidorEmail.criarPasta();
+
         // Flag para controlar o fluxo do programa.
         boolean running = true;
         

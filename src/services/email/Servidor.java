@@ -90,6 +90,27 @@ public void armazenarMensagem(Mensagem mensagem) {
             }
         }
     }
+
+    public void criarPasta(){
+        
+        // Caminho da pasta a ser criada
+        String nomePasta = "servidorDeEmail";
+
+        // Criação do objeto File com o caminho da pasta
+        File pasta = new File(nomePasta);
+
+        // Verifica se a pasta já existe
+        if (!pasta.exists()) {
+            // Cria a pasta
+            if (pasta.mkdir()) {
+                System.out.println("Pasta criada com sucesso!");
+            } else {
+                System.out.println("Falha ao criar a pasta.");
+            }
+        } else {
+            System.out.println("A pasta já existe.");
+        }
+    }
 }
 
 

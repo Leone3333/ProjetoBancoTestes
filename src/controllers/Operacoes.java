@@ -72,7 +72,6 @@ public class Operacoes {
               System.out.print("\033[H\033[2J");
 
         }
-
     }
 
     /**
@@ -83,17 +82,11 @@ public class Operacoes {
      * @param indexDoUsuario    Índice da conta bancária do usuário.
      */
     public static void transferir(Scanner entrada, Banco bancoCriado, Integer indexDoUsuario){
-
-
         
         Locale.setDefault(Locale.US);
-
         System.out.print("\033[H\033[2J");
-        System.out.println("Digite o valor que deseja transferir: ");
-        Double valorParaTransferencia = entrada.nextDouble();
-        System.out.println();
-        System.out.println("Digite o número da conta que irá receber a transferência: ");
 
+        System.out.println("Digite o número da conta que irá receber a transferência: ");
         entrada.nextLine();
         String numeroDaContaRecebedora = entrada.nextLine();
 
@@ -102,6 +95,10 @@ public class Operacoes {
 
         // Pegando o nome de quem irá receber o dinheiro
         String nomeDoRecebedor = bancoCriado.getDados(indexDestino, TipoDeDado.NOME);
+
+        System.out.println("Digite o valor que deseja transferir: ");
+        Double valorParaTransferencia = entrada.nextDouble();
+        System.out.println();
 
         // Sacando da conta que está enviando o dinheiro e depositando na conta recebedora
         if (bancoCriado.getConta(indexDoUsuario).sacar(valorParaTransferencia) && bancoCriado.getConta(indexDestino).depositar(valorParaTransferencia)) {
@@ -119,25 +116,24 @@ public class Operacoes {
      * @param bancoCriado   Banco onde a conta está localizada.
      * @param indexDoUsuario    Índice da conta bancária do usuário.
      */
-    public static void 
-    pix(Scanner entrada, Banco bancoCriado, Integer indexDoUsuario){
+    public static void pix(Scanner entrada, Banco bancoCriado, Integer indexDoUsuario){
 
         Locale.setDefault(Locale.US);
-
         System.out.print("\033[H\033[2J");
-        System.out.println("Digite o valor que deseja transferir: ");
-        Double valorParaPix = entrada.nextDouble();
-        System.out.println();
-        System.out.println("Digite a chave PIX da conta que irá receber a transferência (CPF/CNPJ ou EMAIL): ");
 
+        System.out.println("Digite a chave PIX da conta que irá receber a transferência (CPF/CNPJ ou EMAIL): ");
         entrada.nextLine();
         String chavePixRecebedora = entrada.nextLine();
 
-        // Pegando o index da conta que irá receber e guardando em indexDestino
-        Integer indexDestinoPix = bancoCriado.getIndexDestinatarioPix(chavePixRecebedora);
+         // Pegando o index da conta que irá receber e guardando em indexDestino
+         Integer indexDestinoPix = bancoCriado.getIndexDestinatarioPix(chavePixRecebedora);
 
-        // Pegando o nome de quem irá receber o dinheiro
+         // Pegando o nome de quem irá receber o dinheiro
         String nomeDoRecebedorPix = bancoCriado.getDados(indexDestinoPix, TipoDeDado.NOME);
+
+        System.out.println("Digite o valor que deseja transferir: ");
+        Double valorParaPix = entrada.nextDouble();
+        System.out.println();
 
          // Sacando da conta que está enviando o dinheiro e depositando na conta recebedora
          if (bancoCriado.getConta(indexDoUsuario).sacar(valorParaPix) && bancoCriado.getConta(indexDestinoPix).depositar(valorParaPix)) {
