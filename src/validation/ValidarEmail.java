@@ -6,10 +6,19 @@ import entities.Banco;
 import services.email.Email;
 import services.email.Servidor;
 
+/**
+ * A classe ValidarEmail fornece métodos para solicitar, validar e atualizar endereços de e-mail.
+ */
 public class ValidarEmail {
 
-     //Solicitar e Validar o E-mail 
-     public static Email solicitarEValidarEmail(Scanner entrada, Banco bancoCriado, Servidor servidorEmail){
+    /**
+     * Solicita e valida um endereço de e-mail.
+     * @param entrada O Scanner para entrada do usuário.
+     * @param bancoCriado O banco de dados onde serão verificados os e-mails existentes.
+     * @param servidorEmail O servidor de e-mail utilizado para enviar e armazenar mensagens.
+     * @return O objeto Email verificado ou null se não for possível validar o e-mail.
+     */
+    public static Email solicitarEValidarEmail(Scanner entrada, Banco bancoCriado, Servidor servidorEmail){
 
         boolean emailValido = false; 
         Email emailVerificado;
@@ -22,21 +31,15 @@ public class ValidarEmail {
             if(emailDigitado.isEmpty()){
                 System.out.println("O campo não pode estar vazio");
             }
-
-            //Se o emailDigitado contém @.
             else if(!(emailDigitado.matches("^[a-zA-Z0-9._+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$"))){
                 System.out.println("Digite um e-mail válido! Ex: nome@seudominio.com.br");
                 System.out.println();
             }
-
-             else if(ValidarDadosExistentes.verificarExistencia(bancoCriado, emailDigitado)){
+            else if(ValidarDadosExistentes.verificarExistencia(bancoCriado, emailDigitado)){
                 System.out.println("O E-mail " + emailDigitado + " já está cadastrado." );   
                 System.out.println();
             }
-
             else {
-
-                //Instanciando o E-mail
                 Email email = servidorEmail.cadastrarEmail(emailDigitado);
                 emailVerificado = ValidarEmail.verificacaoDeEmail(entrada, servidorEmail, bancoCriado, email);
                 if (emailVerificado != null) {
@@ -44,18 +47,22 @@ public class ValidarEmail {
                 }
             }
 
-        }while(!emailValido);
+        } while(!emailValido);
     
         return null;
     }
 
-
-   public static Email verificacaoDeEmail(Scanner entrada, Servidor servidorEmail, Banco bancoCriado, Email emailDoUsuario){
-    
-
+    /**
+     * Realiza a verificação do e-mail através de um código enviado.
+     * @param entrada O Scanner para entrada do usuário.
+     * @param servidorEmail O servidor de e-mail utilizado para enviar e armazenar mensagens.
+     * @param bancoCriado O banco de dados onde serão verificados os e-mails existentes.
+     * @param emailDoUsuario O objeto Email do usuário para verificação.
+     * @return O objeto Email verificado ou null se a verificação falhar.
+     */
+    public static Email verificacaoDeEmail(Scanner entrada, Servidor servidorEmail, Banco bancoCriado, Email emailDoUsuario){
         Email emailValido = emailDoUsuario;
 
-        //Enviar um código de verificação
         servidorEmail.armazenarMensagem(bancoCriado.enviarCodigo(emailDoUsuario.getEmail()));
         emailValido.exibirEmailsRecebidos();
     
@@ -64,33 +71,27 @@ public class ValidarEmail {
         System.out.println("Verifique o código enviado para o seu e-mail");
         System.out.println("Digite o código: ");
        
-
         boolean codigoCorreto = false;
 
         do {
             try {
-
                 String codigoDigitado = entrada.nextLine();
 
                 if(codigoDigitado.isEmpty()){
                     System.out.println("O campo não pode estar vazio");
                     System.out.println("Digite o código: ");
                 }
-
-                else{
-
-                Integer codigoValido = Integer.parseInt(codigoDigitado);
+                else {
+                    Integer codigoValido = Integer.parseInt(codigoDigitado);
                 
-                if(!(bancoCriado.verificarCodigo(codigoValido))){
-                    System.out.println();
-                    System.out.println("Código de verificação incorreto!");
-                    System.out.println("Digite o código novamente: ");
-
-                } else {
-                    codigoCorreto = true;
-                    return emailValido;
-                }
-
+                    if(!(bancoCriado.verificarCodigo(codigoValido))){
+                        System.out.println();
+                        System.out.println("Código de verificação incorreto!");
+                        System.out.println("Digite o código novamente: ");
+                    } else {
+                        codigoCorreto = true;
+                        return emailValido;
+                    }
                 }
             } catch (NumberFormatException e) {
                 System.out.println();
@@ -99,49 +100,47 @@ public class ValidarEmail {
             }
         } while(!codigoCorreto);
         
+        return null;
+    }
 
-    return null;
-}
-
+    /**
+     * Atualiza e valida um endereço de e-mail.
+     * @param entrada O Scanner para entrada do usuário.
+     * @param bancoCriado O banco de dados onde serão verificados os e-mails existentes.
+     * @param servidorEmail O servidor de e-mail utilizado para enviar e armazenar mensagens.
+     * @return O endereço de e-mail atualizado e validado ou null se não for possível validar o e-mail.
+     */
     public static String atualizarEValidarEmail(Scanner entrada, Banco bancoCriado, Servidor servidorEmail){
 
         boolean emailValido = false;
         Email emailVerificado;
         String emailDigitado;
 
-
         do{ 
             System.out.println("E-mail: ");
             emailDigitado = entrada.nextLine().trim();
 
-            //Se o emailDigitado contém @.
             if(emailDigitado.isEmpty()){
                 System.out.println("O campo não pode estar vazio");
             }
-
-            //Se o emailDigitado contém @.
             else if(!(emailDigitado.matches("^[a-zA-Z0-9._+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$"))){
                 System.out.println("Digite um e-mail válido! Ex: nome@seudominio.com.br");
                 System.out.println();
             }
-
             else if(ValidarDadosExistentes.verificarExistencia(bancoCriado, emailDigitado)){
                 System.out.println("O E-mail " + emailDigitado + " já está cadastrado." );   
                 System.out.println();
             }
-
             else {
                 Email email = servidorEmail.cadastrarEmail(emailDigitado);
                 emailVerificado = ValidarEmail.verificacaoDeEmail(entrada, servidorEmail, bancoCriado, email);
                 if (emailVerificado != null) {
-                     return emailDigitado;
+                    return emailDigitado;
                 }
             }
 
-        }while(!emailValido);
+        } while(!emailValido);
 
         return null;
-
     }
-
 }
