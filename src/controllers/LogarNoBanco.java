@@ -5,6 +5,7 @@ import java.util.Scanner;
 import entities.Banco;
 import services.email.Servidor;
 import entities.enums.TipoDeDado;
+import controllers.AdministradorBanco;
 
 /**
  * Esta classe contém métodos para realizar o login no sistema bancário.
