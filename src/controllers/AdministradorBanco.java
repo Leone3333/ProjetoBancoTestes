@@ -143,8 +143,7 @@ public class AdministradorBanco {
         for (int index = 0; index < bancoCriado.getContasNoBanco().size(); index++) {
             System.out.printf("%-5s %-25s %-25s %-15s %-15s%n" ,"[" + (index + 1) + "]",  bancoCriado.getDados(index, TipoDeDado.NOME), bancoCriado.getDados(index, TipoDeDado.IDENTIFICACAO), 
             "R$" + bancoCriado.getDados(index, TipoDeDado.SALDO), bancoCriado.getDados(index, TipoDeDado.TIPODACONTA));
-        }
-
+        }   
         System.out.println("=========================================================================================================");
 
         try {
